@@ -1,5 +1,9 @@
 # Proyecto Eloratio
 
+# Problema
+La gente puede tener problemas al momento de dar discursos o presentaciones, ya sea nervios, muletillas, hablar muy rápido o lento, etc.
+# Solución
+Nuestra propuesta para la del problema solución es una apliación para teléfonos móviles la cual permitirá practicar discursos y presentaciones para evitar inconvenientes a la hora de presentar.
 
 # Equipo de trabajo
 |Nombre        |Cargo       |Correo                          |
