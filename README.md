@@ -1,12 +1,15 @@
-# Eloratio
-Eloratio es un proyecto que permitirá a la gente dar mejores discursos al corregir distintos problemas que pueden darse mientras se habla (complementar pls)
+# Proyecto Eloratio
+
 
 # Equipo de trabajo
-Scrum master: Ignacio Geldes
-Product owner: Raúl Arteaga 
-Devs: Matías Torres y Tomás Cortes
+|Nombre        |Cargo       |Correo                          |
+|:-------------|:-----------|:-------------------------------|
+|Ignacio Geldes|Scrum Master|ignacio.geldes@estudiantes.uv.cl|
+|Raúl Arteaga |Product Owner|raul.arteaga@estudiantes.uv.cl|
+|Matías Torres|Developer|matias.torresd@estudiantes.uv.cl|
+|Tomas Cortes|Developer|tomas.cortesb@estudiantes.uv.cl|
 
 # Mockups
-https://www.figma.com/design/ci2HrGfCHVTBlOaGiBhdRz/Sin-t%C3%ADtulo?node-id=0-1&t=9oAmlt3zoMdax4a9-1
+[Mockup 1](https://www.figma.com/design/ci2HrGfCHVTBlOaGiBhdRz/Sin-t%C3%ADtulo?node-id=0-1&t=9oAmlt3zoMdax4a9-1)
 
 (Esto seguir modificando, pero se quedará así por un momento)
