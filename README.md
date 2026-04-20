@@ -18,9 +18,8 @@
 |US-010|Buscar trabalenguas                    | #10 |
 
 ## Requisitos Extrafuncionales
-Ver: [Requisitos Extrafuncionales.md](insertar_nombre_de_archivo_aca)
+Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
 
-Ver archivo: ReqExtrafuncionales.md
 
 
 
