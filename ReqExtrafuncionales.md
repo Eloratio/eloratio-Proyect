@@ -13,3 +13,17 @@ Alta, Media o Baja.
 | REF-03 | Calidad de servicio (Seg.)   | Autenticación requerida para todas las acciones  | Alta      | 
 | REF-04 | Restricción técnica          | Debe funcionar en navegadores modernos (SPA)     | Media     | 
 | REF-05 | Restricción de proyecto      | Equipo de 3-5 personas, plazo 4 semanas          | Media     | 
+
+## Entidades del Dominio 
+
+[Diagrama o descripción de entidades, atributos y relaciones] 
+
+ 
+## Mockups 
+
+| Mockup | Historia de usuario relacionada  | 
+|--------|----------------------------------| 
+| [link o imagen] | US-XX |
+
+## Diseño arquitectónico
+Ver: [Arquitectura.md](./Arquitectura.md)
