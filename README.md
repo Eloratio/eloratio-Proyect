@@ -1,19 +1,33 @@
 # Proyecto Eloratio
 
-# Problema
-La gente puede tener problemas al momento de dar discursos o presentaciones, ya sea nervios, muletillas, hablar muy rápido o lento, etc.
-# Solución
-Nuestra propuesta para la del problema solución es una apliación para teléfonos móviles la cual permitirá practicar discursos y presentaciones para evitar inconvenientes a la hora de presentar.
+## Descripción del sistema
+[rellenar después]
 
-# Equipo de trabajo
-|Nombre        |Cargo       |Correo                          |
-|:-------------|:-----------|:-------------------------------|
-|Ignacio Geldes|Scrum Master|ignacio.geldes@estudiantes.uv.cl|
-|Raúl Arteaga |Product Owner|raul.arteaga@estudiantes.uv.cl|
-|Matías Torres|Developer|matias.torresd@estudiantes.uv.cl|
-|Tomas Cortes|Developer|tomas.cortesb@estudiantes.uv.cl|
+## Historias de usuario
+|ID    |Nombre                         |Issue|
+|------|---------------------------------------|-----|
+|US-01 |Selección de palabras                  | #1  |
+|US-02 |Entrenamiento de Oratoria              | #2  |
+|US-03 |Capacitación corporativa               | #3  |
+|US-04 |Preparación profesional                | #4  |
+|US-05 |Correción oral para estudiantes        | #5  |
+|US-06 |Lista personalizada de palabras        | #6  |
+|US-07 |Ordenamiento de ideas para comunicación| #7  |
+|US-08 |Mejora de pronunciación                | #8  |
+|US-09 |Como cerrar ideas                      | #9  |
+|US-010|Buscar trabalenguas                    | #10 |
 
-# Mockups
-[Mockup 1](https://www.figma.com/design/ci2HrGfCHVTBlOaGiBhdRz/Sin-t%C3%ADtulo?node-id=0-1&t=9oAmlt3zoMdax4a9-1)
+## Requisitos Extrafuncionales
+Ver: [Requisitos Extrafuncionales.md](insertar_nombre_de_archivo_aca)
+Ver archivo: ReqExtrafuncionales.md
 
-(Esto seguir modificando, pero se quedará así por un momento)
+
+
+## Responsabilidades del equipo
+|Nombre        |Rol         |Ítems de la rúbrica a cargo     |
+|--------------|-------------|-------------------------------|
+|Ignacio Geldes|Scrum Master ||
+|Raúl Arteaga  |Product Owner||
+|Matías Torres |Developer    ||
+|Tomas Cortes  |Developer    ||
+
