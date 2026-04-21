@@ -63,13 +63,9 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
  
 
 | REF ID | Descripción                    | Prioridad anterior | Prioridad nueva | Cambio / Motivo           | 
-
 |--------|--------------------------------|--------------------|-----------------|---------------------------| 
-
 | REF-01 | [descripción]                  | Alta               | Alta            | Sin cambio                | 
-
 | REF-03 | [descripción]                  | Media              | Alta            | El cambio lo hace crítico | 
-
 | REF-07 | [nuevo REF derivado del cambio]| —                  | Alta            | Nuevo requisito           | 
 
  
