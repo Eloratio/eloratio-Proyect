@@ -2,9 +2,13 @@
 
 ## Descripción del sistema
 **Eloratio** es una aplicación móvil diseñada para mejorar habilidades de oratoria de los usuarios. El objetivo es ayudar a las personas a desarrollar una comunicación clara, segura y efectiva a través de la práctica guiada y retroalimentación inmediata gracias a una inteligencia artificial.
+
 La aplicación permite al usuario grabar audios basados en textos, los cuales pueden ser porporcionados por el mismo usuario o seleccionados de una biblioteca según lo que quiera mejorar el usuario; como la pronunciación de consonantes o el uso adecuado de las vocales, a partir de la grabación el sistema analiza diversos aspectos del discurso como pronunciación, fluidez, ritmo, entonación y claridad.
+
 Gracias al uso de IA podemos tener una retroalimentación instantánea, personalizada y más efectiva. El feedback identifica errores y te guía para mejorar, explicando cómo corregir los aspectos específicos de la oratoria.
+
 **Eloratio** ofrece la posibilidad de evaluar distintos niveles de prácticas, desde palabras individuales, frases, hasta presentaciones completas.
+
 Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesible y entretenida, basada en dinámicas de gamificación, convirtiendose en una herramienta para el desarrollo de habilidades comunicativas.
 
 ## Historias de usuario
