@@ -272,8 +272,8 @@ cambio de requerimientos y/o la repriorización de REF.]
 
 ## 10. Justificación global y trade-offs 
 
-[Por qué la solución propuesta es coherente con el sistema. 
+La solución propuesta es coherente con la evolución del sistema, ya que responde a la incorporación de un componente altamente demandante en términos de cómputo: el motor de análisis de voz con inteligencia artificial. La arquitectura original de tipo cliente-servidor resultaba insuficiente para manejar de forma eficiente los nuevos requisitos de rendimiento, escalabilidad y mantenibilidad.
 
-Qué trade-offs se asumieron, especialmente ante cambios de prioridad en REF. 
-
-Qué se gana y qué se sacrifica con las decisiones tomadas.] 
+En el caso de REF-06, se reduce la dependencia de APIs externas, optando por integrar el motor de análisis de voz como un módulo interno dentro de la capa de lógica de negocio, manteniendo interfaces bien definidas para su interacción.
+Para REF-09, el aumento en la prioridad de la seguridad se aborda mediante el refuerzo de mecanismos de protección de datos, especialmente relevante debido al procesamiento de audio de usuarios, considerado información sensible.
+Finalmente, en REF-10, la arquitectura en tres capas permite una mejor adaptación a cambios frecuentes, gracias a la separación de responsabilidades y al desacoplamiento del módulo de análisis de voz, facilitando su evolución sin afectar el resto del sistema.
