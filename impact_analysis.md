@@ -78,13 +78,113 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 ## 4. Impacto en entidades del dominio 
 
-[Nuevas entidades, atributos o relaciones afectadas] + Diagrama actualizado 
+Entidades se Dominio
+Nuevas entidades: 
 
- 
+1) IA: Se ocupa de los reconocimientos y verificación de lenguaje de forma apartada
+
+Atributos: 
+-idioma_objetivo
+-palabras_analizadas
+-probunciacion_fonemas
+Métodos:
+-sumar_errores()
+-porcentaje_exactitud()
+-comparar_fonemas()
+-fonemas_dificiles()
+
+La entidad de aprendizaje y progreso pierden algunos atributos y métodos, algunas relaciones también.
+
+Final:
+
+Usuario: Guardar información sobre el avance de aprendizaje por usuario.
+
+Atributos:
+
+    id_usuario
+    nombre_usuario
+    contrasena
+    tiempo_racha
+    sesiones
+    tipo_usuario
+
+Métodos:
+
+    ingresar()
+
+IA: Se ocupa de los reconocimientos y verificación de lenguaje de forma apartada
+
+Atributos: 
+-idioma_objetivo
+-palabras_analizadas
+-pronunciacion_fonemas
+-palabras_sugerencias
+-voz_grabada
+Métodos:
+-sumar_errores()
+-porcentaje_exactitud()
+-comparar_fonemas()
+-fonemas_dificiles()
+-buscar_recomendaciones()
+-analizar_voz()
+
+Aprendizaje: Iniciar las lecciones.
+
+Atributos:
+    -cantidad_errores
+    -texto
+    -tiempo_habla
+    -palabras_mejorar
+Métodos:
+
+    determinar_velocidad_habla()
+    mostrar_sugerencias()
+    
+   
+
+Progreso: Determinar el progreso del usuario.
+
+Atributos:
+
+    claridad_fonetica[]
+    porcentaje_progreso
+    feedback
+    coincidencia_silabas
+    logros
+
+Métodos:
+
+    determinar_porcentaje()
+    obtener_feedback_ia()
+    comparar_silabas()
+    desbloquear_logro()
+    activar_racha()
+    sumador_sesiones()
+
+Visor: Mostrar información relevante a los aministradores.
+
+Atributos:
+
+    colaborador[]
+    num_colaborador
+    progreso_colaborador[]
+    areas_criticas
+
+Métodos:
+
+    extraer_informacion()
+    determinar_progreso()
+    estado_colaborador()
+    contador_colaborador()
+    promedio_progreso()
+    verificador_areas_criticas()
+
+<img width="911" height="351" alt="image" src="https://github.com/user-attachments/assets/d94cfc3a-af4e-4548-b498-0c9bc2830104" />
+
+
+
 
 ## 5. Impacto en mockups 
-
-[Mockups afectados y descripción de cambios necesario
 
 El mockup mas afecctado seria el que esta hecho en figma debido a que el sevicio presentado en figma es muy limitado a 
 comparacion con el hecho en canvas, el modelo en figma trendria cambios radicales agregando mas servicios a comparacion a su 
@@ -96,12 +196,14 @@ Organizar mis ideas, Cerrar una idea, Trabalenguas.
 
 ## 6. Impacto en arquitectura 
 
- 
-
 ### 6.1 ¿Cambia el estilo arquitectónico? 
 
-**Si**, el sistema originalmente estaba basado en cliente-servidor, a partir del cambio solicitado, se evoluciona a modelo de tres capas, separando explixitamente la presentación, lógica de negocio y datos. La decisión está justificada debido al aumento de complejidad en el sistema, sobre todo por el nuevo motor de análisis de voz con IA, la arquitectura de tres capas permite la separación de responsabilidades.
-Al aplicar un cambio, los módulos generan una tensión arquitectónica, ya que su independencia con el resto del sistema es un componente altamente desacoplado dentro de las demás capas
+**Si**, el sistema originalmente estaba basado en cliente-servidor, a partir del cambio solicitado, se evoluciona a modelo de
+tres capas, separando explixitamente la presentación, lógica de negocio y datos. La decisión está justificada debido al aumento
+de complejidad en el sistema, sobre todo por el nuevo motor de análisis de voz con IA, la arquitectura de tres capas permite la
+separación de responsabilidades.
+Al aplicar un cambio, los módulos generan una tensión arquitectónica, ya que su independencia con el resto del sistema es un
+componente altamente desacoplado dentro de las demás capas
 
  
 
