@@ -9,7 +9,7 @@ Alta, Media o Baja.
 | ID     | Tipo                         | Descripción                                              | Prioridad | 
 |--------|------------------------------|----------------------------------------------------------|-----------|  
 | REF-01 | Disponibilidad               | Debe estar disponible el 99% del tiempo                  | Alta      | 
-| REF-02 | Capacidad de interacción     | EL sistema debe ser simple de usar                       | Alta      | 
+| REF-02 | Calidad de servicio          | El sistema debe ser simple de usar                       | Alta      | 
 | REF-03 | Restricción técnica          | Debe funcionar con conexión a internet constante         | Alta      | 
 | REF-04 | Restricción técnica          | Debe ser portable (solo en dispositivos móviles)         | Alta      |
 | REF-05 | Rendimiento                  | El sistema debe soportar más de mil usuarios simultáneos | Alta      | 
