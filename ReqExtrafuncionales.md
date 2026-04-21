@@ -29,7 +29,7 @@ Alta, Media o Baja.
 
 | Mockup | Historia de usuario relacionada  | 
 |--------|----------------------------------| 
-| [link o imagen] | US-XX |
+| [Mockup #1](/.https://www.figma.com/design/ci2HrGfCHVTBlOaGiBhdRz/Sin-t%C3%ADtulo?node-id=0-1&t=39QZ572bzdo9pfzu-0) | US-08 |
 
 ## Diseño arquitectónico
 Ver: [Arquitectura.md](./Arquitectura.md)
