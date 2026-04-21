@@ -6,13 +6,19 @@ La columna Prioridad refleja la importancia para las decisiones de arquitectura:
 
 Alta, Media o Baja. 
 
-| ID     | Tipo                         | Descripción                                      | Prioridad | 
-|--------|------------------------------|--------------------------------------------------|-----------| 
-| REF-01 | Calidad de servicio (Perf.)  | El sistema debe responder en menos de 2 segundos | Alta      | 
-| REF-02 | Calidad de servicio (Disp.)  | Disponibilidad >= 99% en horario laboral         | Alta      | 
-| REF-03 | Calidad de servicio (Seg.)   | Autenticación requerida para todas las acciones  | Alta      | 
-| REF-04 | Restricción técnica          | Debe funcionar en navegadores modernos (SPA)     | Media     | 
-| REF-05 | Restricción de proyecto      | Equipo de 3-5 personas, plazo 4 semanas          | Media     | 
+| ID     | Tipo                         | Descripción                                              | Prioridad | 
+|--------|------------------------------|----------------------------------------------------------|-----------|  
+| REF-01 | Disponibilidad               | Debe estar disponible el 99% del tiempo                  | Alta      | 
+| REF-02 | Capacidad de interacción     | EL sistema debe ser simple de usar                       | Alta      | 
+| REF-03 | Restricción técnica          | Debe funcionar con conexión a internet constante         | Alta      | 
+| REF-04 | Restricción técnica          | Debe ser portable (solo en dispositivos móviles)         | Alta      |
+| REF-05 | Rendimiento                  | El sistema debe soportar más de mil usuarios simultáneos | Alta      | 
+| REF-06 | Restricción técnica          | El sistema debe integrarse con una API de Speech to text | Alta      |
+| REF-07 | Compatibilidad               | Debe funcionar en Android/iOS                            | Media     | 
+| REF-08 | Restricción de proyecto      | El equipo debe ser de 3-5 personas                       | Media     |
+| REF-09 | Seguridad                    | Solo datos de inicio de sesión                           | Baja      |
+| REF-10 | Escalabilidad                | El sistema no tendrá cambios significativos en el futuro | Baja      |
+
 
 ## Entidades del Dominio 
 
