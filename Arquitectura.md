@@ -1,11 +1,13 @@
 ## 1. Estilo Arquitectónico 
 
 
-Estilo adoptado: [nombre del estilo, ej: Cliente-Servidor, Capas, etc.] 
+Estilo adoptado: Cliente-Servidor 
 
 
-Justificación basada en REF priorizados: 
+Justificación basada en REF priorizados: El modelo seleccionado nos permitirá otorgar una retroalimentación por IA, la cuál deberá estar en un servidor aparte. Además se usará una API de Speech to Text para poder traspasar cualquier palabra pronunciada a texto.
 
+
+Trade off: Al ser un modelo Cliente-Servidor, el sistema no podrá funcionar sin una conexión a internet. También se tendrá que depender de forma estricta de un servidor para que el sistema funcione.
  
 
 | REF ID | Descripción                              | Prioridad | Cómo lo aborda el estilo      | 
