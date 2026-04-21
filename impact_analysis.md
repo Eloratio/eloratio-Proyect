@@ -110,14 +110,10 @@ Al aplicar un cambio, los módulos generan una tensión arquitectónica, ya que 
  
 
 | REF ID | Prioridad nueva | Decisión de arquitectura que lo aborda         | 
-
 |--------|-----------------|------------------------------------------------| 
-
 | REF-06 | Baja            | se reemplaza la dependencia de APIS por un módulo propio dentro de la estructura  | 
-
 | REF-09 | Alta            | Se refuerzan mecanismos de seguridad para evitar fugas de datos         | 
-
-| REF-10 | Media            | La nueva estructura permite una mejor adaptación a cambios frecuentes, sobre todo con la IA        |
+| REF-10 | Media           | La nueva estructura permite una mejor adaptación a cambios frecuentes, sobre todo con la IA        |
  
 
 ## 7. Impacto en módulos 
