@@ -37,54 +37,85 @@ Justificación basada en REF priorizados: El modelo seleccionado nos permitirá 
 
  
 
-Fundamentación: [Criterio de descomposición: por dominio, capa, funcionalidad, etc.] 
+**Fundamentación:** Se utiliza una descomposición por capas y funcionalidad, separando la interacción del usuario, la lógica del sistema y el procesamiento de datos. Esto permite mejorar la mantenibilidad, escalabilidad y organización del sistema.
 
  
 
-### Módulo 1: [Nombre] 
+### Módulo 1: Cliente móvil
 
-- Responsabilidad: [qué hace este módulo] 
+Responsabilidad: Gestionar la interacción con el usuario, incluyendo grabación de audio, visualización de resultados y navegación en la aplicación.
 
-- Ofrece a otros módulos: [interfaces o datos que expone] 
+Ofrece a otros módulos: Envío de audios, solicitudes de análisis y recepción de retroalimentación.
 
-- Depende de: [módulos de los que consume servicios] 
+Depende de: Backend del sistema.
+ 
+
+### Módulo 2: Backend
+
+Responsabilidad: Gestionar las solicitudes del cliente, procesar datos, coordinar el análisis de audio y generar respuestas.
+
+Ofrece a otros módulos: Servicios de análisis, gestión de usuarios y entrega de feedback.
+
+Depende de: Módulo de IA y base de datos.
 
  
 
-### Módulo 2: [Nombre] 
+### Módulo 3: Módulo de inteligencia artificial
 
-- Responsabilidad: [qué hace este módulo] 
+Responsabilidad: Analizar los audios del usuario, evaluando pronunciación, fluidez y otros aspectos del discurso, y generar retroalimentación.
 
-- Ofrece a otros módulos: [interfaces o datos que expone] 
+Ofrece a otros módulos: Resultados del análisis y sugerencias de mejora.
 
-- Depende de: [módulos de los que consume servicios] 
+Depende de: Servicios externos de IA o modelos integrados.
 
  
 
-### Módulo N: [Nombre] 
+### Módulo 4: Base de datos
 
-- Responsabilidad: ... 
+Responsabilidad: Almacenar información de usuarios, historial de prácticas y resultados de evaluaciones.
 
-- Ofrece a otros módulos: ... 
+Ofrece a otros módulos: Acceso a datos persistentes.
 
-- Depende de: ... 
+Depende de: Backend.
 
+
+
+### Módulo 5: Contenido y práctica
+
+Responsabilidad: Gestionar textos, ejercicios, trabalenguas y material de apoyo para la práctica del usuario.
+
+Ofrece a otros módulos: Contenido estructurado para ejercicios.
+
+Depende de: Backend.
  
 
 ## 4. Decisiones de Diseño 
 
  
 
-### Decisión 1 
+### Decisión 1
 
-- Decisión: [qué se decide] 
+Decisión: Utilizar procesamiento de audio en el servidor en lugar de realizarlo en el dispositivo móvil.
 
-- Motivación: [por qué, referenciando REF si aplica] 
+Motivación: Permite mejorar el rendimiento (REF-01) y facilita el uso de modelos de inteligencia artificial más complejos sin limitarse por el hardware del usuario.
 
-- Alternativas consideradas: [qué otras opciones se evaluaron] 
+Alternativas consideradas:
 
-- Impacto: [en qué módulos o REF afecta] 
+- Procesamiento local en el dispositivo
+- Procesamiento híbrido
 
---- 
+Impacto: Aumenta la dependencia de conexión a internet, pero mejora la calidad del análisis y la escalabilidad del sistema.
 
+### Decisión 2
+
+Decisión: Separar el sistema en módulos independientes (cliente, backend, IA, base de datos).
+
+Motivación: Mejora la mantenibilidad (REF-04) y facilita la escalabilidad (REF-07).
+
+Alternativas consideradas:
+
+- Arquitectura monolítica
+- Sistema con menor separación de responsabilidades
+
+Impacto: Aumenta la organización del sistema y facilita futuras mejoras, aunque requiere mayor coordinación entre módulos.
  
