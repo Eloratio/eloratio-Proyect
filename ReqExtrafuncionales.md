@@ -29,7 +29,8 @@ Alta, Media o Baja.
 
 | Mockup | Historia de usuario relacionada  | 
 |--------|----------------------------------| 
-| [Mockup #1](./Mockups./Mockup_cel.png) | US-08 |
+| [Mockup #1](./Mockups/Mockup_cel.png) | US-08 |
+| [Mockup #2](./Mockups/corporativo.png)| US-03 |
 
 ## Diseño arquitectónico
 Ver: [Arquitectura.md](./Arquitectura.md)
