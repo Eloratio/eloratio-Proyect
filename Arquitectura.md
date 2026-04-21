@@ -4,7 +4,7 @@
 Estilo adoptado: Cliente-Servidor 
 
 
-Justificación basada en REF priorizados: El modelo seleccionado nos permitirá otorgar una retroalimentación por IA, la cuál deberá estar en un servidor aparte. Además se usará una API de Speech to Text para poder traspasar cualquier palabra pronunciada a texto.
+Justificación basada en REF priorizados: El modelo seleccionado nos permitirá otorgar una retroalimentación por IA, la cuál deberá estar en un servidor aparte. Además se usará una API de Speech to Text para poder traspasar cualquier palabra pronunciada a texto. El cliente deberá solicitar el tipo de practica decidirá realizar y el servidor las mostrará. Una vez realizada la practica, el servidor enviará una evaluación mediante IA para poder determinar las capacidades de habla del usuario y sugerencias.
 
 
 Trade off: Al ser un modelo Cliente-Servidor, el sistema no podrá funcionar sin una conexión a internet. También se tendrá que depender de forma estricta de un servidor para que el sistema funcione.
