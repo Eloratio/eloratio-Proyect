@@ -73,7 +73,7 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 | REF-07 | Debe funcionar en Android/IOS               | Media               | Media            | Sin cambio                | 
 | REF-08 | El equipo debe ser de 3-5 personas                 | Media              | Media            | El cambio lo hace crítico | 
 | REF-09 | Solo datos de inicio de sesión| Baja                  | Alta            | La seguridad puede verse afectada ya que los audios son pasados a un tercero           |
-| REF-10 | El sistema no tendrá cambios significativos en el futuro | Media                  | Media            | La inteligencia artificial tiene actualizaciones constantes, esto puede conllevar a problemas dentro de la estructura   |
+| REF-10 | El sistema no tendrá cambios significativos en el futuro | Baja                  | Media            | La inteligencia artificial tiene actualizaciones constantes, esto puede conllevar a problemas dentro de la estructura   |
 
 
 ## 4. Impacto en entidades del dominio 
