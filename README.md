@@ -27,7 +27,7 @@ Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
 |Nombre        |Rol         |Ítems de la rúbrica a cargo     |
 |--------------|-------------|-------------------------------|
 |Ignacio Geldes|Scrum Master ||
-|Raúl Arteaga  |Product Owner||
+|Raúl Arteaga  |Product Owner| 2.4                           |
 |Matías Torres |Developer    ||
 |Tomas Cortes  |Developer    ||
 
