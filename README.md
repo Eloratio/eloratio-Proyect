@@ -50,5 +50,5 @@ Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
 |Ignacio Geldes|Scrum Master | 1.2|
 |Raúl Arteaga  |Product Owner| 2.4                           |
 |Matías Torres |Developer    | 1.1                           |
-|Tomas Cortes  |Developer    ||
+|Tomas Cortes  |Developer    | 2.2 2.3|
 
