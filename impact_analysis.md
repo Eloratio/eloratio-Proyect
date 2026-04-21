@@ -64,11 +64,17 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 | REF ID | Descripción                    | Prioridad anterior | Prioridad nueva | Cambio / Motivo           | 
 |--------|--------------------------------|--------------------|-----------------|---------------------------| 
-| REF-01 | [descripción]                  | Alta               | Alta            | Sin cambio                | 
-| REF-03 | [descripción]                  | Media              | Alta            | El cambio lo hace crítico | 
-| REF-07 | [nuevo REF derivado del cambio]| —                  | Alta            | Nuevo requisito           | 
+| REF-01 | Debe estar dispobible el 99% del tiempo                | Alta               | ----            | Sin cambio                | 
+| REF-02 | El sistema debe ser simple de usar                  | Media              | Alta            | El cambio lo hace crítico | 
+| REF-03 | Debe funcionar con conexión a internet constante| —                  | Alta            | Nuevo requisito           | 
+| REF-04 | Debe ser portable(solo en dispositivos móviles)                | Alta               | Alta            | Sin cambio                | 
+| REF-05 | El sistema debe soportar más de mil usuarios simultaneos                 | Media              | Alta            | El cambio lo hace crítico | 
+| REF-06 | El sistema debe integrarse con una API de Speech to text| —                  | Alta            | Nuevo requisito           |
+| REF-07 | Debe funcionar en Android/IOS               | Alta               | Alta            | Sin cambio                | 
+| REF-08 | El equipo debe ser de 3-5 personas                 | Media              | Alta            | El cambio lo hace crítico | 
+| REF-09 | Solo datos de inicio de sesión| —                  | Alta            | Nuevo requisito           |
+| REF-10 | El sistema no tendrá cambios significativos en el futuro | —                  | Alta            | Nuevo requisito           |
 
- 
 
 ## 4. Impacto en entidades del dominio 
 
