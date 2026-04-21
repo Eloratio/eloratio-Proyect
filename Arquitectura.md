@@ -12,16 +12,16 @@ Trade off: Al ser un modelo Cliente-Servidor, el sistema no podrá funcionar sin
 
 | REF ID | Descripción                              | Prioridad | Cómo lo aborda el estilo      | 
 |--------|------------------------------------------|-----------|-------------------------------| 
-| REF-01 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-02 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-03 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-04 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-05 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-06 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-07 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-08 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-09 | [descripción]                            | Alta      | [explicación]                 | 
-| REF-10 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-01 | Rendimiento y eficacia                   | Alta      | Se deben tener tiempos de respuesta óptimos para que el sistema funcione bien.| 
+| REF-02 | Seguridad                                | Baja      | Solo se requieren datos de inicio de sesión.| 
+| REF-03 | Disponibilidad                           | Alta      | El sistema deberá estar disponible en todo momento.| 
+| REF-04 | Mantenibilidad                           | Baja      | No cambiará mucho y será el mismo equipo quien mantenga el sistema| 
+| REF-05 | Portabilidad                             | Alta      | El sistema debe ser portable, pues será desarrollado para dispositivos móviles.| 
+| REF-06 | Usabilidad                               | Alta      | El sistema debe ser simple para que el usuario pueda usarlo sin ninguna experiencia previa.| 
+| REF-07 | Escalabilidad                            | Baja      | Si bien se esperan muchos usuarios simultáneos, es posible que una vez cumplido su propósito, los usuarios dejen de usar el sistema, por lo que puede que la cantidad de usuarios se mantenga constante o baje un poco| 
+| REF-08 | Interoperabilidad                        | Alta      | Se debe implementar una API de conversión de voz a texto más un modelo de IA.| 
+| REF-09 | Recuperabilidad                          | Media     | Si hay fallos en el sistema, no ocurrirán perdidas graves de datos, sin embargo, lo ideal sería arreglar el sistema lo antes posible para no prolongar la interrupción.| 
+| REF-10 | Testabilidad                             | Baja      | No debe ser complicado probar la aplicación en caso de error, dado a que funcionaría mediante una API desarrollada por terceros.| 
 
  
 Explicación textual: [Describir por qué el estilo elegido es el más adecuado 
