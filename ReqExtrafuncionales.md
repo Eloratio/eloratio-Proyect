@@ -29,13 +29,13 @@ Alta, Media o Baja.
 
 | Mockup | Historia de usuario relacionada  | 
 |--------|----------------------------------|
-| [Mockup #7](./Mockups/1.png)| US-01 |
+| [Mockup #1](./Mockups/1.png)| US-01 |
 | [Mockup #2](./Mockups/corporativo.png)| US-03 |
-| [Mockup #6](./Mockups/3.png)| US-04 |
-| [Mockup #5](./Mockups/4.png)| US-06 |
-| [Mockup #3](./Mockups/5.png)| US-07 |
-| [Mockup #1](./Mockups/6.png) | US-08 |
-| [Mockup #4](./Mockups/7.png)| US-10 |
+| [Mockup #3](./Mockups/3.png)| US-04 |
+| [Mockup #4](./Mockups/4.png)| US-06 |
+| [Mockup #5](./Mockups/5.png)| US-07 |
+| [Mockup #6](./Mockups/6.png) | US-08 |
+| [Mockup #7](./Mockups/7.png)| US-10 |
 
 ## Diseño arquitectónico
 Ver: [Arquitectura.md](./Arquitectura.md)
