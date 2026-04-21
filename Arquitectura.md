@@ -14,6 +14,14 @@ Trade off: Al ser un modelo Cliente-Servidor, el sistema no podrá funcionar sin
 |--------|------------------------------------------|-----------|-------------------------------| 
 | REF-01 | [descripción]                            | Alta      | [explicación]                 | 
 | REF-02 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-03 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-04 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-05 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-06 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-07 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-08 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-09 | [descripción]                            | Alta      | [explicación]                 | 
+| REF-10 | [descripción]                            | Alta      | [explicación]                 | 
 
  
 Explicación textual: [Describir por qué el estilo elegido es el más adecuado 
