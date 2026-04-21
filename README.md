@@ -47,7 +47,7 @@ Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
 ## Responsabilidades del equipo
 |Nombre        |Rol         |Ítems de la rúbrica a cargo     |
 |--------------|-------------|-------------------------------|
-|Ignacio Geldes|Scrum Master | 1.2|
+|Ignacio Geldes|Scrum Master | 1.2, 2.1                      |
 |Raúl Arteaga  |Product Owner| 2.4                           |
 |Matías Torres |Developer    | 1.1                           |
 |Tomas Cortes  |Developer    | 2.2 2.3|
