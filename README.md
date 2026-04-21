@@ -41,6 +41,76 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 ## Requisitos Extrafuncionales
 Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
 
+## Entidades de Dominio
+
+**Diagrama**:
+
+<img width="961" height="541" alt="Entidades de dominio" src="https://github.com/user-attachments/assets/6e7fe56f-a961-4c42-b88e-b913c0ab0c85" />
+
+
+**Entidades**: 
+
+**Usuario**: Guardar información sobre el avance de aprendizaje por usuario.
+
+Atributos:
+- id_usuario
+- nombre_usuario
+- contrasena
+- tiempo_racha
+- sesiones
+- tipo_usuario
+
+Métodos:
+- ingresar()
+
+**Aprendizaje**: Iniciar las lecciones.
+
+Atributos:
+- palabras_repetidas[]
+- palabras_sugeridas[]
+- velocidad_habla[]
+- fonemas_dificiles[]
+- voz_grabada
+
+Métodos:
+- buscar_repeticiones()
+- buscar_sugerencias()
+- determinar_velocidad()
+- determinar_claridad()
+- analizar_grabacion()
+
+**Progreso**: Determinar el progreso del usuario.
+
+Atributos:
+- claridad_fonetica[]
+- porcentaje_progreso
+- feedback_ia
+- coincidencia_silabas
+- logros
+
+Métodos:
+- determinar_porcentaje()
+- obtener_feedback_ia()
+- comparar_silabas()
+- desbloquear_logro()
+- activar_racha()
+- sumador_sesiones()
+
+**Visor**: Mostrar información relevante a los aministradores.
+
+Atributos:
+- colaborador[]
+- num_colaborador
+- progreso_colaborador[]
+- areas_criticas
+
+Métodos:
+- extraer_informacion()
+- determinar_progreso()
+- estado_colaborador()
+- contador_colaborador()
+- promedio_progreso()
+- verificador_areas_criticas()
 
 
 
