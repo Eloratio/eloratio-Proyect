@@ -1,34 +1,60 @@
 ## 1. Cambio solicitado 
 
-[Describir el cambio de requerimiento asignado por el profesor] 
+Cambio funcional
+Se requiere incorporar un motor de analizis de voz con IA que procese audio en tiempo real, con una carga computacional muy superior al resto de la aplicacion y requisitos de actualizacion independientes.
 
- 
+Cambio no funcional
+El modelo de analisis fonetico debe poder desplegarse y actualizarse de forma independiente sin afectar la disponibilidad del resto de la aplicacio, y debe escalar horizontalmente segun demanda.
 
 ## 2. Nuevas historias de usuario 
 
- 
+### US-11: Sistema facil de mantener.
 
-### US-XX: [nombre] 
-
-Como [actor], 
-
-quiero [acción], 
-
-para [beneficio]. 
-
- 
+Como desarrollador quiero actualizar módulos sin comprometer el funcionamiento de la app, para que los usuario puedan seguir aprendiendo durante estas.
 
 Criterios de aceptación: 
 
-- CA1: ... 
+- CA1: -no interferir con el aprendizaje de los usuarios.
 
-- CA2: ... 
+- CA2: -arreglar errores pequeños rápidamente.
 
- 
+- CA3: -mantener el sistema actualizado.
 
+### Us-12: Multievaluaciones de audios
+
+Como estudiante, quiero que la aplicación haga un análisis de varios audios de forma simultánea para ahorrar tiempo, además, que sea posible subir cuantos audios sea posible para así, no tener que entrar a la aplicación todo el tiempo.
+
+- CA1: -El sistema debe poder recibir varios archivos de audios.
+
+- CA2: -El sistema debe analizar varios audios de forma simultánea.
+
+- CA3: -Retroalimentación inmediata.
+
+### US-13: Disponibilidad del sistema.
+
+Como usuario, quiero que la aplicación siga siendo útil incluso si la inteligencia artificial falla para poder seguir guardando audios o apoyándome con material extra que me pueda proporcionar la aplicación.
+
+-CA1: -Si la inteligencia artificial no responde, que se informe el error sin colapsar.
+
+-CA2: -Perfil, progreso, racha, seguirán operativas.
+
+### US-14: Lista de palabras para una entrevista.
+
+Como postulante en una entrevista, quiero que la aplicación genere un listado de palabras y conceptos a tener en cuenta a la hora de dar atender a una entrevista.
+
+-CA1: -La IA debe generar un listado de palabras a usar segú el área de experticie.
+
+-CA2: -La aplicación debe dar retroalimentación si uso dichas palabras de forma adecuada.
+
+### US-15: Memoria personalizada.
+
+Como usuario, quiero que mi tipo de voz, mi tono y mi acento sea recordado para poder tener una retroalimentación mucho más efectiva.
+
+-CA1: -El sistema entrega feedback personalizado.
+
+-CA2: - El sistema recordará la personalidad y la forma de hablar del usuario.
 ## 3. Impacto en requisitos extrafuncionales 
 
- 
 
 Indicar si el cambio altera la prioridad de algún REF o introduce nuevos. 
 
@@ -50,7 +76,7 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 ## 4. Impacto en entidades del dominio 
 
-[Nuevas entidades, atributos o relaciones afectadas] + Diagrama acutalizado 
+[Nuevas entidades, atributos o relaciones afectadas] + Diagrama actualizado 
 
  
 
