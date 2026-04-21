@@ -84,9 +84,15 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 ## 5. Impacto en mockups 
 
-[Mockups afectados y descripción de cambios necesarios] 
+[Mockups afectados y descripción de cambios necesario
 
- 
+El mockup mas afecctado seria el que esta hecho en figma debido a que el sevicio presentado en figma es muy limitado a 
+comparacion con el hecho en canvas, el modelo en figma trendria cambios radicales agregando mas servicios a comparacion a su 
+primera.
+
+Los cambios cambios necesarios serian agregar mas sevicios debido a que la version de figma esta limitada, se agregarian las 
+opciones de Análisis de discurso, Entrevista Laboral, Mis fonemas críticos, Resumen semanal, Mi vocabulario profesional, 
+Organizar mis ideas, Cerrar una idea, Trabalenguas.
 
 ## 6. Impacto en arquitectura 
 
@@ -94,11 +100,8 @@ Trazar cambios de prioridad que motiven cambios en decisiones de arquitectura.
 
 ### 6.1 ¿Cambia el estilo arquitectónico? 
 
-[Sí/No] — Justificación: 
-
-[Si la repriorización de REF obliga a cambiar el estilo, explicar por qué. 
-
-Si el estilo se mantiene, justificar que sigue siendo válido frente al cambio.] 
+**Si**, el sistema originalmente estaba basado en cliente-servidor, a partir del cambio solicitado, se evoluciona a modelo de tres capas, separando explixitamente la presentación, lógica de negocio y datos. La decisión está justificada debido al aumento de complejidad en el sistema, sobre todo por el nuevo motor de análisis de voz con IA, la arquitectura de tres capas permite la separación de responsabilidades.
+Al aplicar un cambio, los módulos generan una tensión arquitectónica, ya que su independencia con el resto del sistema es un componente altamente desacoplado dentro de las demás capas
 
  
 
@@ -110,10 +113,11 @@ Si el estilo se mantiene, justificar que sigue siendo válido frente al cambio.]
 
 |--------|-----------------|------------------------------------------------| 
 
-| REF-03 | Alta            | [cambio o confirmación de decisión existente]  | 
+| REF-06 | Baja            | se reemplaza la dependencia de APIS por un módulo propio dentro de la estructura  | 
 
-| REF-07 | Alta            | [nueva decisión derivada del cambio]           | 
+| REF-09 | Alta            | Se refuerzan mecanismos de seguridad para evitar fugas de datos         | 
 
+| REF-10 | Media            | La nueva estructura permite una mejor adaptación a cambios frecuentes, sobre todo con la IA        |
  
 
 ## 7. Impacto en módulos 
