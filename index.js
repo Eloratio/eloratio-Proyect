@@ -12,7 +12,7 @@ const swaggerSpec = swaggerJsdoc({
     info: { title: 'API Cursos', version: '1.0.0',
             description: 'API para gestionar cursos academicos' },
     servers: [
-      { url: 'https://cursos-api.onrender.com', description: 'Produccion' },
+      { url: 'https://cursos-api-tfuz.onrender.com', description: 'Produccion' },
       { url: 'http://localhost:3000',            description: 'Local' }
     ]        
   },
