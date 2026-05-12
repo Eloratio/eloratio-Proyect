@@ -1,0 +1,17 @@
+{
+  "name": "eloratio-proyect",
+  "version": "1.0.0",
+  "description": "**Eloratio** es una aplicación móvil diseñada para mejorar habilidades de oratoria de los usuarios. El objetivo es ayudar a las personas a desarrollar una comunicación clara, segura y efectiva a través de la práctica guiada y retroalimentación inmediata gracias a una inteligencia artificial.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^12.9.0",
+    "express": "^5.2.1"
+  }
+}
