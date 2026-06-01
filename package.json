@@ -11,9 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^12.9.0",
+    "better-sqlite3": "^12.10.0",
     "express": "^5.2.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eloratio/eloratio-Proyect.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Eloratio/eloratio-Proyect/issues"
+  },
+  "homepage": "https://github.com/Eloratio/eloratio-Proyect#readme"
 }
