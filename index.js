@@ -1,120 +1,86 @@
-const express      = require('express');
-const db           = require('./db');
-const swaggerUi    = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
+const express = require('express');
+const OpenAI = require('openai');
 
 const app = express();
+
 app.use(express.json());
 
-const swaggerSpec = swaggerJsdoc({
-  definition: {
-    openapi: '3.0.0',
-    info: { title: 'API Cursos', version: '1.0.0',
-            description: 'API para gestionar cursos academicos' },
-    servers: [
-      { url: 'https://cursos-api-tfuz.onrender.com', description: 'Produccion' },
-      { url: 'http://localhost:3000',            description: 'Local' }
-    ]        
-  },
-  apis: ['./index.js']
+const client = new OpenAI({
+  apiKey: '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'
 });
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-/**
- * @swagger
- * /cursos:
- *   get:
- *     summary: Lista todos los cursos
- *     responses:
- *       200:
- *         description: Array de cursos
- */
+app.post('/discurso', async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const response = await client.responses.create({
+      model: 'gpt-5',
+      input: `
+Extrae las palabras clave más importantes del siguiente texto.
+Responde únicamente con un arreglo JSON.
+
+Texto:
+${texto}
+`
+    });
+
+    res.json({
+      palabrasClave: response.output_text
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      error: 'Error al procesar el texto'
+    });
+  }
+});
+
+app.listen(3000, () => {
+  console.log('API corriendo en http://localhost:3000');
+});
+
+/*
+// GET /cursos
 app.get('/cursos', (req, res) => {
-  res.json(db.prepare('SELECT * FROM cursos').all());
+  const cursos = db.prepare('SELECT * FROM cursos').all();
+  res.json(cursos);
 });
 
-/**
- * @swagger
- * /cursos:
- *   post:
- *     summary: Crea un nuevo curso
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nombre:     { type: string }
- *               instructor: { type: string }
- *               creditos:   { type: integer }
- *     responses:
- *       201:
- *         description: Curso creado
- */
+// POST /cursos
 app.post('/cursos', (req, res) => {
   const { nombre, instructor, creditos } = req.body;
-  const r = db.prepare(
+  const result = db.prepare(
     'INSERT INTO cursos (nombre, instructor, creditos) VALUES (?, ?, ?)'
   ).run(nombre, instructor, creditos);
-  res.status(201).json({ id: r.lastInsertRowid, nombre, instructor, creditos });
+  res.status(201).json({ id: result.lastInsertRowid, nombre, instructor, creditos });
 });
 
-/**
- * @swagger
- * /cursos/{id}:
- *   put:
- *     summary: Modifica un curso
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: integer }
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               nombre:     { type: string }
- *               instructor: { type: string }
- *               creditos:   { type: integer }
- *     responses:
- *       200:
- *         description: Curso actualizado
- *       404:
- *         description: No encontrado
- */
+// PUT /cursos/:id
 app.put('/cursos/:id', (req, res) => {
   const { nombre, instructor, creditos } = req.body;
-  const i = db.prepare(
+  const info = db.prepare(
     'UPDATE cursos SET nombre=?, instructor=?, creditos=? WHERE id=?'
   ).run(nombre, instructor, creditos, req.params.id);
-  if (i.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
+  if (info.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
   res.json({ mensaje: 'Curso actualizado' });
 });
 
-/**
- * @swagger
- * /cursos/{id}:
- *   delete:
- *     summary: Elimina un curso
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema: { type: integer }
- *     responses:
- *       200:
- *         description: Curso eliminado
- *       404:
- *         description: No encontrado
- */
+// DELETE /cursos/:id
 app.delete('/cursos/:id', (req, res) => {
-  const i = db.prepare('DELETE FROM cursos WHERE id=?').run(req.params.id);
-  if (i.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
+  const info = db.prepare('DELETE FROM cursos WHERE id=?').run(req.params.id);
+  if (info.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
   res.json({ mensaje: 'Curso eliminado' });
 });
 
-app.listen(3000, () => console.log('API en http://localhost:3000'));
+app.listen(3000, () => {
+  console.log('API corriendo en http://localhost:3000/cursos');
+});
+
+*/

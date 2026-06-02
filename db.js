@@ -2,7 +2,7 @@ const Database = require('better-sqlite3');
 const db = new Database('datos.db');
 
 db.exec(`
-  CREATE TABLE IF NOT EXISTS cursos (
+  CREATE TABLE IF NOT EXISTS lexico (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,
     nombre     TEXT NOT NULL,
     instructor TEXT NOT NULL,
