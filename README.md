@@ -125,8 +125,8 @@ Métodos:
 ## Responsabilidades del equipo Entrega 2
 |Nombre        |Rol         |Ítems de la rúbrica a cargo     |
 |--------------|-------------|-------------------------------|
-|Ignacio Geldes|Scrum Master | 1.1, 2.1                      |
-|Raúl Arteaga  |Product Owner| 1.1, 2.1                      |
-|Matías Torres |Developer    | 1.1, 2.1                      |
-|Tomas Cortes  |Developer    | 1.1                           |
+|Ignacio Geldes|Scrum Master | 1.1, 2.1, 3.1                 |
+|Raúl Arteaga  |Product Owner| 1.1, 2.1, 3.1                 |
+|Matías Torres |Developer    | 1.1, 2.1, 3.1, 4.1            |
+|Tomas Cortes  |Developer    | 1.1, 2.1                      |
 
