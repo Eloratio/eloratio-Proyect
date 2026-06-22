@@ -26,7 +26,6 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Deuda técnica / code smells        | ./DeudaTecnica.md           |
 
 ## Instrucciones de instalación y ejecución
-## Instrucciones de instalación y ejecución
 
 ### Requisitos previos
 
@@ -35,14 +34,15 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 - No se requiere Docker ni base de datos local — la base de datos está en Supabase (nube)
 - **Nota para usuarios Windows:** Si PowerShell bloquea los scripts de npm, ejecutar antes: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
 
-### Variables de entorno
+### Verificar requisitos previos
 
-Crear un archivo `.env` dentro de la carpeta `backend/` con el siguiente contenido:
-
+```bash
+node --version   # Debe mostrar v18.x.x o superior
+git --version    # Debe mostrar la versión de Git instalada
+```
 PORT=3000
 SUPABASE_URL=https://gwjzkzplekwjvyczqkfk.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3anprenBsZWt3anZ5Y3pxa2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNjIyOTUsImV4cCI6MjA5NTkzODI5NX0.aVlJgZeV7sKiwWCp595sy9kC_SS-6aLzCrSlPK8ztSM
-
 ### Instalación y ejecución (sin Docker)
 
 ```bash
@@ -52,8 +52,9 @@ cd eloratio-Proyect
 
 # 2. Instalar dependencias en la raíz
 npm install
+# Verificación: debe mostrar "added X packages, found 0 vulnerabilities"
 
-# 3. Crear el archivo backend/.env con el contenido indicado arriba
+# 3. Crear el archivo backend/.env
 # En Windows con PowerShell:
 New-Item backend\.env -ItemType File
 notepad backend\.env
@@ -62,11 +63,21 @@ notepad backend\.env
 # 4. Instalar dependencias dentro de backend
 cd backend
 npm install
+# Verificación: debe mostrar "added X packages, found 0 vulnerabilities"
 
 # 5. Iniciar el servidor
 node app.js
+# Verificación: debe mostrar "Server on port 3000"
 ```
 
+Para confirmar que funciona, abrir el navegador en `http://localhost:3000` — debe responder:
+```json
+{ "status": "Eloratio API running" }
+```
+
+### Variables de entorno
+
+Crear un archivo `.env` dentro de la carpeta `backend/` con el siguiente contenido:
 
 ## Decisiones principales
 
