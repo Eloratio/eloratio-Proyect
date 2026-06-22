@@ -18,8 +18,8 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Modelo de dominio                  | [Modelo](./Diagramas/Modelo_de_dominio.png)           |
 | Diagrama de casos de uso           | [Diagrama](./Diagramas/Diagrama_de_casos_de_uso.png)|
 | Especificación de HU               | ./EspecificacionHU.md       |
-| Diagrama de estados                |                             |
-| Diagrama de despliegue y comp.     | [enlace o imagen]           |
+| Diagrama de estados                | [Diagrama](./Diagrama_de_estados.png)                            |
+| Diagrama de despliegue y comp.     | [Diagrama](./Diagrama_de_despliegue.png)           |
 | Diagrama de componentes            | [Diagrama](./Diagramas/Diagrama_de_componentes.png)           |
 | Diagrama de secuencia              | [Diagrama](./Diagramas/Diagrama_de_secuencia.drawio.png)           |
 | Casos de prueba                    | ./CasosDePrueba.md          |
@@ -60,12 +60,6 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 
 ## Requisitos Extrafuncionales
 Ver: [Requisitos Extrafuncionales.md](./ReqExtrafuncionales.md)
-
-## Entidades de Dominio
-
-**Diagrama**:
-
-<img width="961" height="541" alt="Entidades de dominio" src="https://github.com/user-attachments/assets/6e7fe56f-a961-4c42-b88e-b913c0ab0c85" />
 
 
 **Entidades**: 
