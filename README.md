@@ -47,20 +47,20 @@ bash# 1. Clonar el repositorio
 git clone https://github.com/Eloratio/eloratio-Proyect.git
 cd eloratio-Proyect
 
-# 2. Instalar dependencias en la raíz
+2. Instalar dependencias en la raíz
 npm install
 
-# 3. Crear el archivo backend/.env con el contenido indicado arriba
-# En Windows con PowerShell:
+3. Crear el archivo backend/.env con el contenido indicado arriba
+En Windows con PowerShell:
 New-Item backend\.env -ItemType File
 notepad backend\.env
-# Pegar las variables de entorno, guardar y cerrar
+Pegar las variables de entorno, guardar y cerrar
 
-# 4. Instalar dependencias dentro de backend
+4. Instalar dependencias dentro de backend
 cd backend
 npm install
 
-# 5. Iniciar el servidor
+5. Iniciar el servidor
 node app.js
 
 
