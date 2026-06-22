@@ -40,9 +40,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 node --version   # Debe mostrar v18.x.x o superior
 git --version    # Debe mostrar la versión de Git instalada
 ```
-PORT=3000
-SUPABASE_URL=https://gwjzkzplekwjvyczqkfk.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3anprenBsZWt3anZ5Y3pxa2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNjIyOTUsImV4cCI6MjA5NTkzODI5NX0.aVlJgZeV7sKiwWCp595sy9kC_SS-6aLzCrSlPK8ztSM
+
 ### Instalación y ejecución (sin Docker)
 
 ```bash
@@ -58,7 +56,11 @@ npm install
 # En Windows con PowerShell:
 New-Item backend\.env -ItemType File
 notepad backend\.env
-# Pegar las variables de entorno, guardar y cerrar
+# Pegar el siguiente contenido, guardar y cerrar:
+#
+# PORT=3000
+# SUPABASE_URL=https://gwjzkzplekwjvyczqkfk.supabase.co
+# SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3anprenBsZWt3anZ5Y3pxa2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNjIyOTUsImV4cCI6MjA5NTkzODI5NX0.aVlJgZeV7sKiwWCp595sy9kC_SS-6aLzCrSlPK8ztSM
 
 # 4. Instalar dependencias dentro de backend
 cd backend
@@ -74,7 +76,6 @@ Para confirmar que funciona, abrir el navegador en `http://localhost:3000` — d
 ```json
 { "status": "Eloratio API running" }
 ```
-
 ### Variables de entorno
 
 Crear un archivo `.env` dentro de la carpeta `backend/` con el siguiente contenido:
