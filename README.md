@@ -22,7 +22,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Diagrama de despliegue y comp.     | [Diagrama](./Diagrama_de_despliegue.png)           |
 | Diagrama de componentes            | [Diagrama](./Diagramas/Diagrama_de_componentes.png)           |
 | Diagrama de secuencia              | [Diagrama](./Diagramas/Diagrama_de_secuencia.drawio.png)           |
-| Casos de prueba                    | ./CasosDePrueba.md          |
+| Casos de prueba                    | [Casos de prueba](./CasosDePrueba.md)          |
 | Deuda técnica / code smells        | ./DeudaTecnica.md           |
 
 ## Instrucciones de instalación y ejecución
@@ -197,10 +197,10 @@ Métodos:
 ## Responsabilidades del equipo Entrega 3
 |Nombre        |Rol         |Ítems de la rúbrica a cargo     |
 |--------------|-------------|-------------------------------|
-|Ignacio Geldes|Scrum Master |                  |
+|Ignacio Geldes|Scrum Master | 2.2, 2,4 4.1                |
 |Raúl Arteaga  |Product Owner|                  |
 |Matías Torres |Developer    | 1.1, 1.2, 1.3            |
-|Tomas Cortes  |Developer    |                       |
+|Tomas Cortes  |Developer    | 2.1,2.3,2.4,3                      |
 
 
 
