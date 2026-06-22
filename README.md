@@ -15,7 +15,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 ## Artefactos del proyecto
 | Artefacto                          | Ubicación / enlace          |
 |------------------------------------|-----------------------------|
-| Modelo de dominio                  | [enlace o imagen]           |
+| Modelo de dominio                  | [Modelo](./Diagramas/Modelo_de_dominio.png)           |
 | Diagrama de casos de uso           | [Diagrama](./Diagramas/Diagrama_de_casos_de_uso.png)|
 | Especificación de HU               | ./EspecificacionHU.md       |
 | Diagrama de estados                |                             |
