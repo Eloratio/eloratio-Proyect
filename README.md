@@ -194,4 +194,13 @@ Métodos:
 |Matías Torres |Developer    | 1.1, 2.1, 3.1, 4.1            |
 |Tomas Cortes  |Developer    | 1.1, 2.1                      |
 
+## Responsabilidades del equipo Entrega 3
+|Nombre        |Rol         |Ítems de la rúbrica a cargo     |
+|--------------|-------------|-------------------------------|
+|Ignacio Geldes|Scrum Master |                  |
+|Raúl Arteaga  |Product Owner|                  |
+|Matías Torres |Developer    | 1.1, 1.2, 1.3            |
+|Tomas Cortes  |Developer    |                       |
+
+
 
