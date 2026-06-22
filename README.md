@@ -17,7 +17,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 |------------------------------------|-----------------------------|
 | Modelo de dominio                  | [Modelo](./Diagramas/Modelo_de_dominio.png)           |
 | Diagrama de casos de uso           | [Diagrama](./Diagramas/Diagrama_de_casos_de_uso.png)|
-| Especificación de HU               | ./EspecificacionHU.md       |
+| Especificación de HU               | [Espeficiación](./EspecificacionHU.md)       |
 | Diagrama de estados                | [Diagrama](./Diagrama_de_estados.png)                            |
 | Diagrama de despliegue y comp.     | [Diagrama](./Diagrama_de_despliegue.png)           |
 | Diagrama de componentes            | [Diagrama](./Diagramas/Diagrama_de_componentes.png)           |
