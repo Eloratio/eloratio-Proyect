@@ -198,7 +198,7 @@ Métodos:
 |Nombre        |Rol         |Ítems de la rúbrica a cargo     |
 |--------------|-------------|-------------------------------|
 |Ignacio Geldes|Scrum Master | 2.2, 2,4 4.1                |
-|Raúl Arteaga  |Product Owner|                  |
+|Raúl Arteaga  |Product Owner| 1.3, 2.1, 2.3               |
 |Matías Torres |Developer    | 1.1, 1.2, 1.3            |
 |Tomas Cortes  |Developer    | 2.1,2.3,2.4,3                      |
 
