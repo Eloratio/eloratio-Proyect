@@ -1,13 +1,18 @@
 const express = require('express');
-const OpenAI = require('openai');
 
 const app = express();
 
 app.use(express.json());
 
-const client = new OpenAI({
-  apiKey: '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'
+// GET API
+
+app.get("", (req,res) => {
+  res.json({
+    Estado_API: "Funcionando"
+  });
 });
+
+//POST Mandar discurso
 
 app.post('/discurso', async (req, res) => {
   try {
@@ -19,33 +24,50 @@ app.post('/discurso', async (req, res) => {
       });
     }
 
-    const response = await client.responses.create({
-      model: 'gpt-5',
-      input: `
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
 Extrae las palabras clave más importantes del siguiente texto.
-Responde únicamente con un arreglo JSON.
+
+Responde únicamente con JSON válido.
+
+Formato:
+{
+  "keywords": ["palabra1", "palabra2"]
+}
 
 Texto:
 ${texto}
-`
-    });
+`,
+          format: 'json',
+          stream: false
+        })
+      }
+    );
 
-    res.json({
-      palabrasClave: response.output_text
-    });
+    const data = await ollamaResponse.json();
+
+    res.json(JSON.parse(data.response));
 
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
       error: 'Error al procesar el texto'
     });
   }
 });
 
-app.listen(3000, () => {
-  console.log('API corriendo en http://localhost:3000');
+app.listen(57423, () => {
+  console.log('API corriendo en http://localhost:57423');
 });
-
 /*
 // GET /cursos
 app.get('/cursos', (req, res) => {
