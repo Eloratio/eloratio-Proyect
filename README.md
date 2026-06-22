@@ -26,44 +26,46 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Deuda técnica / code smells        | ./DeudaTecnica.md           |
 
 ## Instrucciones de instalación y ejecución
+## Instrucciones de instalación y ejecución
+
 ### Requisitos previos
 
-Node.js v18 o superior — descargar e instalar desde el sitio oficial
-Git (para clonar el repositorio)
-No se requiere Docker ni base de datos local — la base de datos está en Supabase (nube)
-Nota para usuarios Windows: Si PowerShell bloquea los scripts de npm, ejecutar antes: Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+- [Node.js v18 o superior](https://nodejs.org/) — descargar e instalar desde el sitio oficial
+- Git (para clonar el repositorio)
+- No se requiere Docker ni base de datos local — la base de datos está en Supabase (nube)
+- **Nota para usuarios Windows:** Si PowerShell bloquea los scripts de npm, ejecutar antes: `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`
 
-Variables de entorno
+### Variables de entorno
 
-Crear un archivo .env dentro de la carpeta backend/ con el siguiente contenido:
+Crear un archivo `.env` dentro de la carpeta `backend/` con el siguiente contenido:
 
 PORT=3000
 SUPABASE_URL=https://gwjzkzplekwjvyczqkfk.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3anprenBsZWt3anZ5Y3pxa2ZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNjIyOTUsImV4cCI6MjA5NTkzODI5NX0.aVlJgZeV7sKiwWCp595sy9kC_SS-6aLzCrSlPK8ztSM
 
-Instalación y ejecución (sin Docker)
+### Instalación y ejecución (sin Docker)
 
-bash# 1. Clonar el repositorio
+```bash
+# 1. Clonar el repositorio
 git clone https://github.com/Eloratio/eloratio-Proyect.git
 cd eloratio-Proyect
 
-2. Instalar dependencias en la raíz
+# 2. Instalar dependencias en la raíz
 npm install
 
-3. Crear el archivo backend/.env con el contenido indicado arriba
-En Windows con PowerShell:
+# 3. Crear el archivo backend/.env con el contenido indicado arriba
+# En Windows con PowerShell:
 New-Item backend\.env -ItemType File
 notepad backend\.env
-Pegar las variables de entorno, guardar y cerrar
+# Pegar las variables de entorno, guardar y cerrar
 
-4. Instalar dependencias dentro de backend
+# 4. Instalar dependencias dentro de backend
 cd backend
 npm install
 
-5. Iniciar el servidor
+# 5. Iniciar el servidor
 node app.js
-
-
+```
 
 
 ## Decisiones principales
