@@ -20,7 +20,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Especificación de HU               | ./EspecificacionHU.md       |
 | Diagrama de estados                |                             |
 | Diagrama de despliegue y comp.     | [enlace o imagen]           |
-| Diagrama de componentes            | [enlace o imagen]           |
+| Diagrama de componentes            | [Diagrama](./Diagramas/Diagrama_de_componentes.png)           |
 | Diagrama de secuencia              | [Diagrama](./Diagramas/Diagrama_de_secuencia.drawio.png)           |
 | Casos de prueba                    | ./CasosDePrueba.md          |
 | Deuda técnica / code smells        | ./DeudaTecnica.md           |
