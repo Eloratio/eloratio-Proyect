@@ -7,6 +7,26 @@ La aplicación permite al usuario grabar audios basados en textos, los cuales pu
 
 Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesible y entretenida, basada en dinámicas de gamificación, convirtiendose en una herramienta para el desarrollo de habilidades comunicativas.
 
+## Historia de usuario implementada
+| ID    | Nombre                    | Issue |
+|-------|---------------------------|-------|
+| US-02 | Retroalimentación de Oratoria para Presentaciones Académicas| #2    |
+
+## Artefactos del proyecto
+| Artefacto                          | Ubicación / enlace          |
+|------------------------------------|-----------------------------|
+| Modelo de dominio                  | [enlace o imagen]           |
+| Diagrama de casos de uso           | [Diagrama](./Diagramas/Diagrama_de_casos_de_uso.png)|
+| Especificación de HU               | ./EspecificacionHU.md       |
+| Diagrama de estados                |                             |
+| Diagrama de despliegue y comp.     | [enlace o imagen]           |
+| Diagrama de componentes            | [enlace o imagen]           |
+| Diagrama de secuencia              | [enlace o imagen]           |
+| Casos de prueba                    | ./CasosDePrueba.md          |
+| Deuda técnica / code smells        | ./DeudaTecnica.md           |
+
+
+
 ## Decisiones principales
 
 **Arquitectura cliente-servidor**
