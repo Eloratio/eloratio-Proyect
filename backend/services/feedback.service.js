@@ -1,23 +1,23 @@
 // Analiza el texto transcrito del usuario vs el texto propuesto
 // Retorna métricas, errores de estructura y sugerencias
 
-function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion) {
+function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, duracionSeg) {
   const palabrasOriginales = textoOriginal.toLowerCase().split(/\s+/);
   const palabrasUsuario = textoUsuario.toLowerCase().split(/\s+/);
 
   // Coincidencia de palabras clave
   const coincidencias = palabrasUsuario.filter(p => palabrasOriginales.includes(p)).length;
-  const claridad = Math.min(99, Math.round((coincidencias / palabrasOriginales.length) * 100));
+  let claridad = Math.min(99, Math.round((coincidencias / palabrasOriginales.length) * 100));
 
   // Formalidad según tipo de presentación
   const marcadoresInformales = ['o sea', 'igual', 'como que', 'tipo', 'obvio', 'igual po'];
   const informalismos = marcadoresInformales.filter(m => textoUsuario.toLowerCase().includes(m)).length;
-  const formalidad = Math.min(99, Math.max(0, 100 - (informalismos * 15)));
+  let formalidad = Math.min(99, Math.max(0, 100 - (informalismos * 15)));
 
   // Fluidez: penaliza oraciones muy cortas o muy largas
   const oraciones = textoUsuario.split(/[.!?]+/).filter(o => o.trim().length > 0);
   const longitudPromedio = oraciones.reduce((sum, o) => sum + o.trim().split(/\s+/).length, 0) / (oraciones.length || 1);
-  const fluidez = longitudPromedio >= 8 && longitudPromedio <= 25 ? 85 : longitudPromedio < 8 ? 55 : 70;
+  let fluidez = longitudPromedio >= 8 && longitudPromedio <= 25 ? 85 : longitudPromedio < 8 ? 55 : 70;
 
   // Ritmo: basado en variedad de longitud de oraciones
   const longitudes = oraciones.map(o => o.trim().split(/\s+/).length);
@@ -26,16 +26,75 @@ function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion) {
     : 0;
   const ritmo = Math.min(99, Math.round(50 + varianza));
 
-  // Errores de estructura según tipo de presentación
+  // Tarea 2.2: Algoritmo de detección de muletillas
+  const listaMuletillas = ['eh', 'em', 'este', 'bueno', 'o sea', 'entonces', 'tipo', 'verdad', 'no', 'ya'];
+  const muletillasDetectadas = {};
+  let totalMuletillas = 0;
+
+  listaMuletillas.forEach(m => {
+    const regex = new RegExp(`\\b${m}\\b`, 'gi');
+    const coincidenciasMuletilla = (textoUsuario.match(regex) || []).length;
+    if (coincidenciasMuletilla > 0) {
+      muletillasDetectadas[m] = coincidenciasMuletilla;
+      totalMuletillas += coincidenciasMuletilla;
+    }
+  });
+
+  // Penalización por muletillas (si representan más del 3% de las palabras del discurso)
+  const totalPalabras = palabrasUsuario.length || 1;
+  const porcentajeMuletillas = (totalMuletillas / totalPalabras) * 100;
+  if (porcentajeMuletillas > 3) {
+    claridad = Math.max(0, claridad - 20);
+    fluidez = Math.max(0, fluidez - 20);
+  }
+
+  // Tarea 2.1: Errores de estructura según tipo de presentación (incluyendo tipos académicos)
   const errores = [];
   if (tipoPresentacion === 'formal' || tipoPresentacion === 'academica') {
     if (!textoUsuario.match(/buenos días|buenas tardes|estimados|presentar|objetivo/i))
       errores.push({ tipo: 'apertura', descripcion: 'Falta una introducción formal al inicio del discurso' });
     if (!textoUsuario.match(/concluir|en conclusión|para finalizar|en resumen/i))
       errores.push({ tipo: 'cierre', descripcion: 'No se detectó un cierre o conclusión del discurso' });
+  } else if (tipoPresentacion === 'expositiva') {
+    if (!textoUsuario.match(/exponer|presentar|introducción|tema a tratar/i))
+      errores.push({ tipo: 'apertura', descripcion: 'Falta una introducción adecuada (ej. "exponer", "presentar", "introducción" o "tema a tratar")' });
+    if (!textoUsuario.match(/para finalizar|en conclusión|gracias por su atención/i))
+      errores.push({ tipo: 'cierre', descripcion: 'Falta un cierre formal (ej. "para finalizar", "en conclusión" o "gracias por su atención")' });
+  } else if (tipoPresentacion === 'defensa_tesis') {
+    if (!textoUsuario.match(/comisión|miembros del jurado|profesores|defensa de mi tesis/i))
+      errores.push({ tipo: 'apertura', descripcion: 'Falta un saludo a la comisión o miembros del jurado al inicio' });
+    if (!textoUsuario.match(/metodología|resultados|hipótesis|investigación/i))
+      errores.push({ tipo: 'desarrollo', descripcion: 'Falta mencionar la metodología o investigación (ej. "metodología", "resultados", "hipótesis" o "investigación")' });
+    if (!textoUsuario.match(/conclusiones|sugerencias|quedo a su disposición/i))
+      errores.push({ tipo: 'cierre', descripcion: 'Falta un cierre formal de la defensa (ej. "conclusiones", "sugerencias" o "quedo a su disposición")' });
+  } else if (tipoPresentacion === 'seminario') {
+    if (!textoUsuario.match(/seminario|presentación|tópico/i))
+      errores.push({ tipo: 'apertura', descripcion: 'Falta una apertura que mencione el seminario, presentación o tópico' });
+    if (!textoUsuario.match(/preguntas|comentarios|discusión/i))
+      errores.push({ tipo: 'cierre', descripcion: 'Falta un cierre que abra el seminario a preguntas, comentarios o discusión' });
   }
+
   if (informalismos > 0)
     errores.push({ tipo: 'formalidad', descripcion: `Se detectaron ${informalismos} expresión(es) informal(es) no apropiadas` });
+
+  // Tarea 2.3: Generador de recomendaciones de pronunciación/pausas
+  const recomendacionesPronunciacion = [];
+  const conteoEhEm = (muletillasDetectadas['eh'] || 0) + (muletillasDetectadas['em'] || 0);
+  if (conteoEhEm > 0) {
+    recomendacionesPronunciacion.push("Recomendación de pausa silenciosa: cuando sientas la necesidad de vocalizar 'eh', inhala aire y haz una pausa de 1 segundo.");
+  }
+
+  const conteoConectores = (muletillasDetectadas['entonces'] || 0) + (muletillasDetectadas['o sea'] || 0);
+  if (conteoConectores > 0) {
+    recomendacionesPronunciacion.push("Recomendación de conectores: utiliza conectores lógicos variados como 'por lo tanto', 'en consecuencia' o 'asimismo'.");
+  }
+
+  if (duracionSeg && duracionSeg > 0) {
+    const ppm = (palabrasUsuario.length / duracionSeg) * 60;
+    if (ppm > 160) {
+      recomendacionesPronunciacion.push("Recomendación de dicción: disminuye la velocidad de habla para permitir una articulación fonética más limpia.");
+    }
+  }
 
   // Sugerencias específicas (CA4)
   const sugerencias = [];
@@ -47,6 +106,8 @@ function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion) {
     sugerencias.push('Varía la extensión de tus oraciones para mejorar el ritmo');
   if (oraciones.length < 3)
     sugerencias.push('Desarrolla más tu discurso, actualmente es demasiado breve');
+  if (porcentajeMuletillas > 3)
+    sugerencias.push('Intenta reducir el uso de muletillas de apoyo (eh, bueno, o sea, etc.)');
   if (sugerencias.length === 0)
     sugerencias.push('¡Buen trabajo! Continúa practicando para mantener este nivel');
 
@@ -55,15 +116,17 @@ function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion) {
   const feedback = generarFeedbackTexto(puntuacion, tipoPresentacion, errores.length);
 
   return { 
-  claridad: Math.min(99, claridad), 
-  formalidad: Math.min(99, formalidad), 
-  fluidez: Math.min(99, fluidez), 
-  ritmo: Math.min(99, ritmo), 
-  errores, 
-  sugerencias, 
-  feedback, 
-  puntuacion: Math.min(99, puntuacion) 
-};
+    claridad: Math.min(99, claridad), 
+    formalidad: Math.min(99, formalidad), 
+    fluidez: Math.min(99, fluidez), 
+    ritmo: Math.min(99, ritmo), 
+    errores, 
+    sugerencias, 
+    feedback, 
+    puntuacion: Math.min(99, puntuacion),
+    muletillas: muletillasDetectadas,
+    recomendaciones_pronunciacion: recomendacionesPronunciacion
+  };
 }
 
 function generarFeedbackTexto(puntuacion, tipo, cantErrores) {
@@ -74,4 +137,4 @@ function generarFeedbackTexto(puntuacion, tipo, cantErrores) {
   return `Tu presentación ${tipo} necesita trabajo en varios aspectos. Presta especial atención a la estructura formal y al vocabulario apropiado para el contexto.`;
 }
 
-module.exports = { analizarDiscurso };
+module.exports = { analizarDiscurso };
