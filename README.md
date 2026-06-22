@@ -76,9 +76,6 @@ Para confirmar que funciona, abrir el navegador en `http://localhost:3000` — d
 ```json
 { "status": "Eloratio API running" }
 ```
-### Variables de entorno
-
-Crear un archivo `.env` dentro de la carpeta `backend/` con el siguiente contenido:
 
 ## Decisiones principales
 
@@ -196,4 +193,5 @@ Métodos:
 |Raúl Arteaga  |Product Owner| 1.1, 2.1, 3.1                 |
 |Matías Torres |Developer    | 1.1, 2.1, 3.1, 4.1            |
 |Tomas Cortes  |Developer    | 1.1, 2.1                      |
+
 
