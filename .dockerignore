@@ -1,0 +1,17 @@
+node_modules
+npm-debug.log
+.git
+.gitignore
+.agents
+docker-compose.yml
+.env
+.env.example
+test_conexion.js
+*.db
+Mockups
+*.png
+Arquitectura.md
+ReqExtrafuncionales.md
+README.md
+impact_analysis.md
+openspec

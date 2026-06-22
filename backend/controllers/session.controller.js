@@ -1,5 +1,6 @@
 const supabase = require('../services/supabase');
 const { analizarDiscurso } = require('../services/feedback.service');
+const { crearReportePdf } = require('../services/pdf.service');
 
 // POST /sessions — CA1: crear sesión con texto propuesto
 async function crearSesion(req, res) {
@@ -8,7 +9,7 @@ async function crearSesion(req, res) {
   if (!usuario_id || !tipo_presentacion || !texto_propuesto)
     return res.status(400).json({ error: 'Faltan campos requeridos: usuario_id, tipo_presentacion, texto_propuesto' });
 
-  const tiposValidos = ['formal', 'informal', 'academica', 'corporativa'];
+  const tiposValidos = ['formal', 'informal', 'academica', 'corporativa', 'expositiva', 'defensa_tesis', 'seminario'];
   if (!tiposValidos.includes(tipo_presentacion))
     return res.status(400).json({ error: `tipo_presentacion debe ser uno de: ${tiposValidos.join(', ')}` });
 
@@ -51,7 +52,7 @@ async function analizarSesion(req, res) {
     return res.status(409).json({ error: 'Esta sesión ya fue analizada' });
 
   // Ejecutar análisis
-  const analisis = analizarDiscurso(sesion.texto_propuesto, texto_usuario, sesion.tipo_presentacion);
+  const analisis = analizarDiscurso(sesion.texto_propuesto, texto_usuario, sesion.tipo_presentacion, duracion_seg);
   console.log('ANALISIS:', JSON.stringify(analisis));
 
   // Guardar análisis
@@ -65,7 +66,9 @@ async function analizarSesion(req, res) {
       ritmo: analisis.ritmo,
       errores_estructura: analisis.errores,
       sugerencias: analisis.sugerencias,
-      feedback_ia: analisis.feedback
+      feedback_ia: analisis.feedback,
+      muletillas: analisis.muletillas,
+      recomendaciones_pronunciacion: analisis.recomendaciones_pronunciacion
     });
 
   if (errAnalisis) return res.status(500).json({ error: errAnalisis.message });
@@ -89,7 +92,9 @@ async function analizarSesion(req, res) {
     },
     errores_estructura: analisis.errores,
     sugerencias: analisis.sugerencias,
-    feedback: analisis.feedback
+    feedback: analisis.feedback,
+    muletillas: analisis.muletillas,
+    recomendaciones_pronunciacion: analisis.recomendaciones_pronunciacion
   });
 }
 
@@ -148,4 +153,47 @@ async function obtenerResumen(req, res) {
   });
 }
 
-module.exports = { crearSesion, analizarSesion, obtenerResumen };
+// GET /sessions/:id/reporte — Tarea 3.3: descargar reporte PDF
+async function descargarReportePdf(req, res) {
+  const { id } = req.params;
+
+  try {
+    // 1. Obtener la sesión existente
+    const { data: sesion, error: errSesion } = await supabase
+      .from('sesiones_practica')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (errSesion || !sesion)
+      return res.status(404).json({ error: 'Sesión no encontrada' });
+
+    if (sesion.estado !== 'completada')
+      return res.status(400).json({ error: 'La sesión aún no ha sido analizada, no se puede generar el reporte' });
+
+    // 2. Obtener el análisis
+    const { data: analisis, error: errAnalisis } = await supabase
+      .from('analisis_sesion')
+      .select('*')
+      .eq('sesion_id', id)
+      .single();
+
+    if (errAnalisis || !analisis)
+      return res.status(404).json({ error: 'Análisis no encontrado para esta sesión' });
+
+    // 3. Generar el reporte PDF
+    const doc = crearReportePdf(sesion, analisis);
+
+    // 4. Configurar headers y enviar el PDF
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=reporte-eloratio-${id}.pdf`);
+    
+    doc.pipe(res);
+    doc.end();
+  } catch (error) {
+    console.error('Error al generar PDF:', error);
+    return res.status(500).json({ error: 'Error interno del servidor al generar el reporte PDF' });
+  }
+}
+
+module.exports = { crearSesion, analizarSesion, obtenerResumen, descargarReportePdf };
