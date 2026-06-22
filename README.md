@@ -23,7 +23,7 @@ Se busca entregar una experiencia de aprendizaje interactiva, progresiva, accesi
 | Diagrama de componentes            | [Diagrama](./Diagramas/Diagrama_de_componentes.png)           |
 | Diagrama de secuencia              | [Diagrama](./Diagramas/Diagrama_de_secuencia.drawio.png)           |
 | Casos de prueba                    | [Casos de prueba](./CasosDePrueba.md)          |
-| Deuda técnica / code smells        | ./DeudaTecnica.md           |
+| Deuda técnica / code smells        | [Deuda técnica](./DeudaTecnica.md)           |
 
 ## Instrucciones de instalación y ejecución
 
