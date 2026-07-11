@@ -1,25 +1,29 @@
+/*
+
 // Analiza el texto transcrito del usuario vs el texto propuesto
 // Retorna métricas, errores de estructura y sugerencias
 
+
+//summary (analizar todo lo otro)
 function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, duracionSeg) {
   const palabrasOriginales = textoOriginal.toLowerCase().split(/\s+/);
   const palabrasUsuario = textoUsuario.toLowerCase().split(/\s+/);
 
-  // Coincidencia de palabras clave
+  // Coincidencia de palabras clave >> palabras clave
   const coincidencias = palabrasUsuario.filter(p => palabrasOriginales.includes(p)).length;
   let claridad = Math.min(99, Math.round((coincidencias / palabrasOriginales.length) * 100));
 
-  // Formalidad según tipo de presentación
+  // Formalidad según tipo de presentación >> formalidad
   const marcadoresInformales = ['o sea', 'igual', 'como que', 'tipo', 'obvio', 'igual po'];
   const informalismos = marcadoresInformales.filter(m => textoUsuario.toLowerCase().includes(m)).length;
   let formalidad = Math.min(99, Math.max(0, 100 - (informalismos * 15)));
 
-  // Fluidez: penaliza oraciones muy cortas o muy largas
+  // Fluidez: penaliza oraciones muy cortas o muy largas >> x
   const oraciones = textoUsuario.split(/[.!?]+/).filter(o => o.trim().length > 0);
   const longitudPromedio = oraciones.reduce((sum, o) => sum + o.trim().split(/\s+/).length, 0) / (oraciones.length || 1);
   let fluidez = longitudPromedio >= 8 && longitudPromedio <= 25 ? 85 : longitudPromedio < 8 ? 55 : 70;
 
-  // Ritmo: basado en variedad de longitud de oraciones
+  // Ritmo: basado en variedad de longitud de oraciones >> x
   const longitudes = oraciones.map(o => o.trim().split(/\s+/).length);
   const varianza = longitudes.length > 1
     ? longitudes.reduce((s, l) => s + Math.pow(l - longitudPromedio, 2), 0) / longitudes.length
@@ -137,4 +141,8 @@ function generarFeedbackTexto(puntuacion, tipo, cantErrores) {
   return `Tu presentación ${tipo} necesita trabajo en varios aspectos. Presta especial atención a la estructura formal y al vocabulario apropiado para el contexto.`;
 }
 
-module.exports = { analizarDiscurso };
+*/
+
+
+
+module.exports = { analizarDiscurso };
