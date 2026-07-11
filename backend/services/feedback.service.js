@@ -1,3 +1,31 @@
+const {consultarAi, summaryAi} = require('../services/genmma4');
+
+
+
+//Hace consultas a la API con IA
+
+async function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, duracion_seg){
+  
+  //analiza las palabras clave
+  const claridad = await consultarAi("keywords", textoOriginal);
+
+  //analiza la formalidad del discurso
+  const formalidad = await consultarAi("formality", textoOriginal);
+
+  //analiza posibles sugerencias que se pueden dar a partir del texto
+  const sugerencia = await consultarAi("tips", textoOriginal);
+
+  //crea el feedback general
+  const resumen = await summaryAi(claridad, formalidad, sugerencia, textoOriginal);
+
+  //retorna un análisis general del discurso
+  return resumen;
+
+
+}
+
+
+
 /*
 
 // Analiza el texto transcrito del usuario vs el texto propuesto

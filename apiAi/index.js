@@ -71,15 +71,14 @@ Formato:
 Texto:
 ${texto}
 
+recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
           format: 'json',
           stream: false
         })
       }
     );
-
     const data = await ollamaResponse.json();
-
     res.json(JSON.parse(data.response));
 
   } catch (error) {
@@ -138,8 +137,8 @@ Responde únicamente con JSON válido.
 
 Formato:
 {
-  "formalidad": 0,
-  "explicacion": "Razones de la calificacion de formalidaddsa"
+  "formalidad": "0",
+  "explicacion": "Razones de la calificacion de formalidad"
 }
 
 El valor de "formalidad" debe estar entre 0 y 99, donde:
@@ -148,15 +147,15 @@ El valor de "formalidad" debe estar entre 0 y 99, donde:
 
 Texto:
 ${texto}
+
+recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
           format: 'json',
           stream: false
         })
       }
     );
-
     const data = await ollamaResponse.json();
-
     res.json(JSON.parse(data.response));
 
   } catch (error) {
@@ -227,15 +226,14 @@ Formato:
 Texto:
 ${texto}
 
+recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
           format: 'json',
           stream: false
         })
       }
     );
-
     const data = await ollamaResponse.json();
-
     res.json(JSON.parse(data.response));
 
   } catch (error) {
@@ -339,7 +337,8 @@ Donde sugerencia es un texto generado a partir de la variable tips.
 Genera un comentario general sobre la calidad del discurso, incluyendo fortalezas y aspectos a mejorar.
 Este se debe generar una vez se hayan analizado todos los pasos anteriores.
 Este debe ser un texto.
-La puntuacion debe ser determinada a partir de los puntajes de claridad, formalidad, fluidez y ritmo, siendo un promedio de estos 4 valores, siendo también un valor entre 0 a 99 donde 0 significa que es un mal discurso en general y 99 que es un discurso que se da a entender por completo.
+
+8. Muletillas:
 Las muletillas deben ser palabras que se repitan a menudo en el texto, por lo general son monosílabos por ejemplo: eh, ah. También pueden ser frases que se repiten demasiado.
 formato de las muletillas: debe ser un jsonb con la siguiente estructura:
 
@@ -352,6 +351,7 @@ donde muletilla debe ser la muletilla detectada.
 un texto puede no tener muletillas.
 cantidadCorrespontiende se refiere a la cantidad que aparece cierta muletilla.
 
+9.Recomendaciones de pronunciacion:
 Las recomendaciones de pronunciacion deben ser una recomendacion obtenida a partir del texto donde se intenta dar consejos sobre como pronunciar palabras de forma correcta, por ejemplo palabras extranjeras o también consejos para evitar caer en las muletillas.
 un texto puede no tener recomendaciones de pronunciacion.
 formato de las recomendaciones de pronunciacion:
@@ -370,6 +370,7 @@ Reglas:
 - Los valores numéricos deben estar entre 0 y 99 excepto el de las muletillas.
 - No agregues información externa al discurso.
 - Responde únicamente con JSON válido.
+- Ninguno de los puntos enumerados pueden faltar en la respuesta, sobretodo el feedback, en caso de que no haya algo que mejorar indicar expresamente eso o devolver el campo o lista vacio, dependiendo de lo que se esté pidiendo.
 
 
 Formato de respuesta:
@@ -392,8 +393,6 @@ Formato de respuesta:
   ],
 
   "feedback": "Comentario general del análisis.",
-
-  "puntuacion": 0,
 
   "muletillas": {
     "ejemplo": 0
@@ -418,15 +417,14 @@ ${tips}
 Texto:
 ${texto}
 
+recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa.
 `,
           format: 'json',
           stream: false
         })
       }
     );
-
     const data = await ollamaResponse.json();
-
     res.json(JSON.parse(data.response));
 
   } catch (error) {

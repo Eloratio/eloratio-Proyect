@@ -1,6 +1,6 @@
 
 const axios = require("axios");
-const urlApiAi = "gatuno.serveminecraft.net:57423";
+const urlApiAi = "http://gatuno.serveminecraft.net:57423";
 
 
 //consultas AI= /keywords, /formality, /tips
@@ -67,4 +67,4 @@ async function summaryAi(keywords, formality, tips, texto){
 
 }
 
-module.exports
+module.exports = { consultarAi, summaryAi };
