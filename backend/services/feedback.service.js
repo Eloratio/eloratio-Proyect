@@ -1,20 +1,11 @@
-const {consultarAi, summaryAi, consultarFormalidad} = require('../services/genmma4');
+const {consultarAi, summaryAi, metricAi} = require('../services/genmma4');
 
 //Hace consultas a la API con IA
 
 async function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, duracion_seg){
   
-  //analiza la claridad del discurso
-  const clarity = await consultarAi("clarity", textoOriginal);
-
-  //analiza la formalidad del discurso
-  const formality = await consultarFormalidad(textoOriginal, tipoPresentacion);
-
-  //analiza la fluidez del discurso
-  const fluency = await consultarAi("fluency", textoOriginal);
-
-  //analiza el ritmo del discurso
-  const rhythm = await consultarAi("rhythm", textoOriginal);
+  //analiza la claridad, formalidad, fluidez y ritmo del discurso
+  const metric = await metricAi("metric",tipoPresentacion, textoOriginal);
 
   //analiza los errores de estructura
   const error = await consultarAi("error", textoOriginal);
@@ -29,14 +20,14 @@ async function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, d
   const pronunciation = await consultarAi("pronunciation", textoOriginal);
 
   //crea el feedback general
-  const feedback = await summaryAi(clarity, formality, fluency, rhythm, error, suggestion, filler, pronunciation, textoOriginal);
+  const feedback = await summaryAi(metric, error, suggestion, filler, pronunciation, textoOriginal);
 
   //retorna un análisis general del discurso
   return { 
-    claridad: clarity, 
-    formalidad: formality, 
-    fluidez: fluency, 
-    ritmo: rhythm, 
+    claridad: metric[0], 
+    formalidad: metric[1], 
+    fluidez: metric[2], 
+    ritmo: metric[3], 
     errores: error, 
     sugerencias: suggestion, 
     feedback: feedback, 

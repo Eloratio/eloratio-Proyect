@@ -3,9 +3,7 @@ const axios = require("axios");
 const urlApiAi = "http://gatuno.serveminecraft.net:57423";
 
 
-//consultas AI= clarity, fluency, rhythm, error, suggestion, filler, pronunciation
-async function consultarAi(consulta, texto) {
-
+async function consultarAi(consulta, texto){
     try {
 
         const response = await axios.post(
@@ -33,13 +31,14 @@ async function consultarAi(consulta, texto) {
     }
 }
 
-//consultas AI= formality
-async function consultarFormalidad(texto, tipo) {
+
+//consultas AI= metric, error, suggestion, filler, pronunciation
+async function metricAi(consulta, tipo, texto) {
 
     try {
 
         const response = await axios.post(
-            `${urlApiAi}/formality`,
+            `${urlApiAi}/${consulta}`,
             {
                 tipo: tipo,
                 texto: texto
@@ -64,18 +63,17 @@ async function consultarFormalidad(texto, tipo) {
     }
 }
 
+
+
 //consulta AI= feedback
-async function summaryAi(clarity, formality, fluency, rhythm, error, suggestion, filler, pronunciation, texto){
+async function summaryAi(metric, error, suggestion, filler, pronunciation, texto){
 
     try{
 
         const response = await axios.post(
             `${urlApiAi}/feedback`,
             {
-                clarity: clarity,
-                formality: formality,
-                fluency: fluency,
-                rhythm: rhythm,
+                metric: metric,
                 error: error,
                 suggestion: suggestion,
                 filler: filler,
@@ -103,4 +101,4 @@ async function summaryAi(clarity, formality, fluency, rhythm, error, suggestion,
 
 }
 
-module.exports = { consultarAi, consultarFormalidad, summaryAi };
+module.exports = { consultarAi, metricAi, summaryAi };

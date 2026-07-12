@@ -12,71 +12,10 @@ app.get("", (req,res) => {
   });
 });
 
-//POST Palabras claves >> claridad
-//analiza las palabras claves y da un puntaje de claridad
+//POST Metricas
+//Analiza claridad, formalidad, fluidez y ritmo del discurso
 
-app.post('/clarity', async (req, res) => {
-  try {
-    const { texto } = req.body;
-
-    if (!texto) {
-      return res.status(400).json({
-        error: 'Debe enviar el discurso, formato: {"texto":"discurso"}'
-      });
-    }
-
-    const ollamaResponse = await fetch(
-      'http://localhost:11434/api/generate',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'gemma4',
-          prompt: `
-
-Analiza el siguiente discurso y analiza la claridad del mensaje que entrega.
-A partir de este análisis debes puntuar la claridad del discurso con un número que va desde 0 hasta 99, siendo 0 cuando las palabras que usa el discurso no permite entender el mensaje y 99 que el mensaje se entiende a la perfección.
-Se recomienda iniciar con 99 puntos y luego ir restando por errores.
-Debes restar 3 puntos por términos desconocidos no explicados.
-Debes restar 2 puntos por cada falta ortografica o error de coherencia/cohesion.
-
-Responde únicamente con un valor numérico que vaya desde 0 hasta 99.
-
-formato respuesta: 0
-
-0 es el valor numerico que puede variar de 0 a 99
-
-Texto:
-${texto}
-
-`,
-          stream: false,
-          keep_alive: "20m",
-          options: {
-            num_gpu: 99,
-            num_thread: 8,
-            temperature: 0.2
-          }
-        })
-      }
-    );
-    const data = await ollamaResponse.json();
-    res.json(Number(data.response.trim()));
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: 'Error al procesar el texto o no hay json valido'
-    });
-  }
-});
-
-//POST Formalidad
-
-app.post('/formality', async (req, res) => {
+app.post('/metric', async (req, res) => {
   try {
     const { tipo, texto } = req.body;
 
@@ -97,13 +36,29 @@ app.post('/formality', async (req, res) => {
           model: 'gemma4',
           prompt: `
 
-Analiza el siguiente discurso y evalúa su nivel de formalidad para determinar si es adecuado para el ambiente solicitado.
+Analiza el siguiente discurso y evalúa su nivel de claridad, formalidad, fluidez y ritmo.
+Cada apartado corresponde a un numero que va desde 0 a 99.
+0 significa que no cumple con ese apartado y 99 que lo hace perfectamente.
 
-El valor de "formalidad" debe estar entre 0 y 99, donde:
-- 0 representa un discurso completamente fuera del ambiente indicado.
-- 99 representa un discurso que encanja perfectamente en el ambiente indicado.
+La claridad se calcula a partir de la efectividad del mensaje que entrega.
+Debes restar 3 puntos por términos desconocidos no explicados.
+Debes restar 2 puntos por cada falta ortografica o error de coherencia/cohesion.
 
-Responde unicamente con un valor numerico desde 0 a 99.
+La formalidad debe ser calculada a partir de la adecuacion del tono del texto y el ambiente especificado.
+También sobre el tono que se tiene con el oyente.
+
+La fluidez evalúa si la estructura del discurso entregado en la variable texto permite una comunicación natural.
+Considera conexión entre ideas, organización de frases y facilidad de seguimiento para la audiencia.
+
+El ritmo evalúa la distribución de ideas dentro del discurso.
+Considera si existen partes demasiado extensas, repetitivas o poco desarrolladas.
+
+Formato de respuesta: Debes contestar con un string con variables separadas con ampersand (&), estas variables deben contener unicamente numeros y no dar ninguna retroalimentacion con la siguiente estructura:
+
+claridad&formalidad&fluidez&ritmo
+
+Donde claridad, formalidadm fluidez y ritmo son numeros que van desde 0 a 99 con las propiedades antes descritas.
+si o si debe haber una nota en los 4 apartados.
 
 Ambiente:
 ${tipo}
@@ -120,121 +75,16 @@ ${texto}
       }
     );
     const data = await ollamaResponse.json();
-    res.json(Number(data.response.trim()));
+    const metricaString = data.response.trim();
+    const metricaObjeto = metricaString.split("&");
+
+    res.json(metricaObjeto.map(Number));
 
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
       error: 'Error al procesar el texto o no hay json valido'
-    });
-  }
-});
-
-//POST Fluidez
-
-app.post('/fluency', async (req, res) => {
-  try {
-    const { texto } = req.body;
-
-    if (!texto) {
-      return res.status(400).json({
-        error: 'Debe enviar un texto'
-      });
-    }
-
-    const ollamaResponse = await fetch(
-      'http://localhost:11434/api/generate',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'gemma4',
-          prompt: `
-
-Evalúa si la estructura del discurso entregado en la variable texto permite una comunicación natural.
-Considera conexión entre ideas, organización de frases y facilidad de seguimiento para la audiencia.
-Valor numérico desde 0 hasta 99, donde 0 significa que no hay comunicación natural y 99 significa que si una persona lee el discurso entrega el mensaje fácilmente.
-
-responde unicamente con un valor numérico desde 0 a 99.
-
-Texto:
-${texto}
-
-`,
-          stream: false,
-          options: {
-            num_gpu: 99,
-            num_thread: 8,
-            temperature: 0.2
-          }
-        })
-      }
-    );
-    const data = await ollamaResponse.json();
-    res.json(Number(data.response.trim()));
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: 'Error al procesar el texto o no hay un json valido'
-    });
-  }
-});
-
-//POST Ritmo
-
-app.post('/rhythm', async (req, res) => {
-  try {
-    const { texto } = req.body;
-
-    if (!texto) {
-      return res.status(400).json({
-        error: 'Debe enviar un texto'
-      });
-    }
-
-    const ollamaResponse = await fetch(
-      'http://localhost:11434/api/generate',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'gemma4',
-          prompt: `
-
-Evalúa la distribución de ideas dentro del discurso.
-Considera si existen partes demasiado extensas, repetitivas o poco desarrolladas y si tienen una entrega de informacion constante durante el discurso.
-Valor numérico desde 0 hasta 99, donde 0 significa que el ritmo en la que se da a entender el mensaje no es para nada acorde y 99 que el ritmo en el que se entrega la información es adecuado para el entendimiento del mensaje.
-
-responde unicamente con un valor numérico desde 0 a 99.
-
-Texto:
-${texto}
-
-`,
-          stream: false,
-          options: {
-            num_gpu: 99,
-            num_thread: 8,
-            temperature: 0.2
-          }
-        })
-      }
-    );
-    const data = await ollamaResponse.json();
-    res.json(Number(data.response.trim()));
-
-  } catch (error) {
-    console.error(error);
-
-    res.status(500).json({
-      error: 'Error al procesar el texto o no hay un json valido'
     });
   }
 });
@@ -511,9 +361,9 @@ ${texto}
 
 app.post('/feedback', async (req, res) => {
   try {
-    const { clarity, formality, fluency, rhythm, error, suggestion, filler, pronunciation, texto } = req.body;
+    const { metric, error, suggestion, filler, pronunciation, texto } = req.body;
 
-    if (!clarity || !formality || !fluency || !rhythm || !error || !suggestion || !filler || !pronunciation || !texto) {
+    if (!metric || !error || !suggestion || !filler || !pronunciation || !texto) {
       return res.status(400).json({
         error: 'Falta(n) algún(os) componente(s)'
       });
@@ -532,7 +382,7 @@ app.post('/feedback', async (req, res) => {
 
 Genera un comentario general sobre la calidad del discurso, incluyendo fortalezas y aspectos a mejorar.
 Este se debe generar a partir de toda la informacion entregada.
-Las variables Claridad, Formalidad, Fluidez y Ritmo son notas que van desde el 0 hasta 99, siendo 0 que no cumple con ese ámbito y 99 que el discurso cumple con eso de manera correcta.
+Las variables Claridad, Formalidad, Fluidez y Ritmo son notas que van desde el 0 hasta 99, siendo 0 que no cumple con ese ámbito y 99 que el discurso cumple con eso de manera correcta, son dadas por la variable metrica.
 Este debe ser un texto generado no muy extenso (máximo un párrafo).
 Si o si debe haber un feedback respecto al discurso.
 Si quieres usar el caracter: ", reemplazalo con : '
@@ -540,12 +390,8 @@ Si quieres usar el caracter: ", reemplazalo con : '
 
 Texto:
 ${texto}
-Claridad:
-${clarity}
-Fluidez:
-${fluency}
-Ritmo:
-${rhythm}
+Metricas:
+${metric}
 Errores de estructura
 ${error}
 Sugerencias
