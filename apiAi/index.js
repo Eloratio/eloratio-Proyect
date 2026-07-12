@@ -4,7 +4,7 @@ const app = express();
 
 app.use(express.json());
 
-// GET API
+// GET API (Muestra que la api está encendida)
 
 app.get("", (req,res) => {
   res.json({
@@ -12,15 +12,16 @@ app.get("", (req,res) => {
   });
 });
 
-//POST Palabras claves
+//POST Palabras claves >> claridad
+//analiza las palabras claves y da un puntaje de claridad
 
-app.post('/keywords', async (req, res) => {
+app.post('/clarity', async (req, res) => {
   try {
     const { texto } = req.body;
 
     if (!texto) {
       return res.status(400).json({
-        error: 'Debe enviar un texto'
+        error: 'Debe enviar el discurso, formato: {"texto":"discurso"}'
       });
     }
 
@@ -35,57 +36,40 @@ app.post('/keywords', async (req, res) => {
           model: 'gemma4',
           prompt: `
 
-Analiza el siguiente discurso y extrae sus palabras clave más importantes.
+Analiza el siguiente discurso y analiza la claridad del mensaje que entrega.
+A partir de este análisis debes puntuar la claridad del discurso con un número que va desde 0 hasta 99, siendo 0 cuando las palabras que usa el discurso no permite entender el mensaje y 99 que el mensaje se entiende a la perfección.
+Se recomienda iniciar con 99 puntos y luego ir restando por errores.
+Debes restar 3 puntos por términos desconocidos no explicados.
+Debes restar 2 puntos por cada falta ortografica o error de coherencia/cohesion.
 
-Primero identifica mentalmente el tema central del discurso y los conceptos principales que permiten comprenderlo. Luego selecciona las palabras clave que representen mejor las ideas fundamentales del texto.
+Responde únicamente con un valor numérico que vaya desde 0 hasta 99.
 
-Para cada palabra clave seleccionada, genera una definición breve basada en el contexto específico en el que aparece dentro del discurso. La definición debe explicar qué significa o qué representa esa palabra dentro del discurso analizado, no una definición general de diccionario.
+formato respuesta: 0
 
-Reglas para las palabras clave:
-- Cada palabra clave debe ser una sola palabra.
-- No uses frases, expresiones compuestas ni grupos de palabras a menos que sea estrictamente necesario.
-- No incluyas artículos, preposiciones o palabras demasiado generales (ejemplo: "el", "la", "cosa", "importante").
-- Usa palabras que aparezcan dentro del discurso o que sean términos directamente relacionados con los conceptos principales del discurso.
-- Prioriza sustantivos y términos específicos sobre palabras comunes.
-- La cantidad de palabras clave debe ser proporcional a la longitud del discurso y no superar la cantidad de 15.
-- Las palabras deben ayudar a una persona a entender rápidamente de qué trata el discurso.
-- Las definiciones deben estar basadas únicamente en la información proporcionada por el discurso.
-- No agregues información externa que no pueda inferirse del texto.
-
-Responde únicamente con JSON válido.
-
-Formato:
-{
-  "keywords": [
-    {
-      "word": "palabra1",
-      "definition": "Definición de la palabra según el contexto del discurso."
-    },
-    {
-      "word": "palabra2",
-      "definition": "Definición de la palabra según el contexto del discurso."
-    }
-  ]
-}
+0 es el valor numerico que puede variar de 0 a 99
 
 Texto:
 ${texto}
 
-recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
-          format: 'json',
-          stream: false
+          stream: false,
+          keep_alive: "20m",
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.2
+          }
         })
       }
     );
     const data = await ollamaResponse.json();
-    res.json(JSON.parse(data.response));
+    res.json(Number(data.response.trim()));
 
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      error: 'Error al procesar el texto'
+      error: 'Error al procesar el texto o no hay json valido'
     });
   }
 });
@@ -94,11 +78,11 @@ recuerda que el archivo json debe estar perfectamente correcto, sino esto traer�
 
 app.post('/formality', async (req, res) => {
   try {
-    const { texto } = req.body;
+    const { tipo, texto } = req.body;
 
     if (!texto) {
       return res.status(400).json({
-        error: 'Debe enviar un texto'
+        error: 'Debe enviar un texto y su tipo correspondiente, Formato: {"tipo":"tipo de presentacion","texto":"Discurso"}'
       });
     }
 
@@ -113,63 +97,43 @@ app.post('/formality', async (req, res) => {
           model: 'gemma4',
           prompt: `
 
-Analiza el siguiente discurso y evalúa su nivel de formalidad para determinar si es adecuado para un ambiente formal.
-
-Primero identifica mentalmente el contexto general del discurso y el tipo de situación comunicativa en la que podría utilizarse. Luego analiza si el lenguaje empleado es apropiado para una presentación formal, académica, profesional o institucional.
-
-Evalúa los siguientes aspectos:
-- Uso de vocabulario formal y técnico.
-- Presencia de expresiones coloquiales, informales o poco profesionales.
-- Uso adecuado de conectores y estructura de las ideas.
-- Tono general del discurso.
-- Claridad y precisión del lenguaje utilizado.
-- Adecuación del discurso al contexto formal indicado.
-
-Reglas del análisis:
-- Basa el análisis únicamente en el texto proporcionado.
-- No evalúes la calidad de las ideas ni si el contenido es correcto, solo analiza la forma en que está expresado.
-- Identifica ejemplos concretos de expresiones que disminuyen la formalidad cuando existan.
-- Si una expresión puede ser aceptable en un contexto informal pero no en uno profesional, explica esa diferencia.
-- Las recomendaciones deben estar orientadas a mejorar la formalidad del discurso.
-- No inventes errores que no estén presentes en el texto.
-
-Responde únicamente con JSON válido.
-
-Formato:
-{
-  "formalidad": "0",
-  "explicacion": "Razones de la calificacion de formalidad"
-}
+Analiza el siguiente discurso y evalúa su nivel de formalidad para determinar si es adecuado para el ambiente solicitado.
 
 El valor de "formalidad" debe estar entre 0 y 99, donde:
-- 0 representa un discurso completamente informal.
-- 99 representa un discurso altamente formal y adecuado para ambientes académicos o profesionales.
+- 0 representa un discurso completamente fuera del ambiente indicado.
+- 99 representa un discurso que encanja perfectamente en el ambiente indicado.
 
+Responde unicamente con un valor numerico desde 0 a 99.
+
+Ambiente:
+${tipo}
 Texto:
 ${texto}
-
-recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
-          format: 'json',
-          stream: false
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.2
+          }
         })
       }
     );
     const data = await ollamaResponse.json();
-    res.json(JSON.parse(data.response));
+    res.json(Number(data.response.trim()));
 
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      error: 'Error al procesar el texto'
+      error: 'Error al procesar el texto o no hay json valido'
     });
   }
 });
 
-//POST Recomendaciones
+//POST Fluidez
 
-app.post('/tips', async (req, res) => {
+app.post('/fluency', async (req, res) => {
   try {
     const { texto } = req.body;
 
@@ -190,70 +154,366 @@ app.post('/tips', async (req, res) => {
           model: 'gemma4',
           prompt: `
 
-Analiza el siguiente discurso y genera sugerencias para mejorar la transmisión del mensaje que se desea comunicar.
+Evalúa si la estructura del discurso entregado en la variable texto permite una comunicación natural.
+Considera conexión entre ideas, organización de frases y facilidad de seguimiento para la audiencia.
+Valor numérico desde 0 hasta 99, donde 0 significa que no hay comunicación natural y 99 significa que si una persona lee el discurso entrega el mensaje fácilmente.
 
-Primero identifica mentalmente cuál es la idea principal del discurso, sus objetivos comunicativos y los conceptos más importantes que intenta transmitir. Luego analiza si las palabras utilizadas expresan esos conceptos de la manera más clara, precisa y efectiva posible.
-
-Busca oportunidades de mejora relacionadas con:
-- Uso de palabras más precisas para representar conceptos complejos.
-- Reemplazo de explicaciones largas por términos específicos cuando exista una palabra adecuada.
-- Simplificación de palabras demasiado complejas cuando dificulten la comprensión del mensaje.
-- Mejora de la claridad de las ideas.
-- Uso de vocabulario más adecuado para transmitir emociones, conceptos o situaciones específicas.
-- Selección de palabras que generen un mayor impacto comunicativo en la audiencia.
-
-Reglas del análisis:
-- No cambies el significado original del discurso.
-- No reemplaces palabras solamente por ser más técnicas o complejas; la nueva palabra debe mejorar la precisión del mensaje.
-- Prioriza palabras que permitan expresar una idea completa de manera más clara.
-- Considera el contexto completo del discurso antes de sugerir cambios.
-- Las sugerencias deben estar justificadas explicando por qué la modificación mejora la transmisión del mensaje.
-- Si el discurso ya utiliza palabras adecuadas, indícalo y no inventes mejoras innecesarias.
-- Un discurso puede no tener sugerencias.
-
-Responde únicamente con JSON válido.
-
-la cantidad de sugerencias puede ser desde 0 hasta 10 como máximo. en caso de no haber sugerencias indicar que la sugerencia1 = "No hay sugerencias"
-
-Formato:
-{
-  "sugerencias": [
-          "sugerencia1",
-          "sugerencia2"
-  ],
-  }
+responde unicamente con un valor numérico desde 0 a 99.
 
 Texto:
 ${texto}
 
-recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa
 `,
-          format: 'json',
-          stream: false
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.2
+          }
         })
       }
     );
     const data = await ollamaResponse.json();
-    res.json(JSON.parse(data.response));
+    res.json(Number(data.response.trim()));
 
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      error: 'Error al procesar el texto'
+      error: 'Error al procesar el texto o no hay un json valido'
     });
   }
 });
 
-//POST Analisis
+//POST Ritmo
 
-app.post('/summary', async (req, res) => {
+app.post('/rhythm', async (req, res) => {
   try {
-    const { 
-      keywords, formality, tips, texto
-    } = req.body;
+    const { texto } = req.body;
 
-    if (!keywords || !formality || !tips || !texto) {
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
+
+Evalúa la distribución de ideas dentro del discurso.
+Considera si existen partes demasiado extensas, repetitivas o poco desarrolladas y si tienen una entrega de informacion constante durante el discurso.
+Valor numérico desde 0 hasta 99, donde 0 significa que el ritmo en la que se da a entender el mensaje no es para nada acorde y 99 que el ritmo en el que se entrega la información es adecuado para el entendimiento del mensaje.
+
+responde unicamente con un valor numérico desde 0 a 99.
+
+Texto:
+${texto}
+
+`,
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.2
+          }
+        })
+      }
+    );
+    const data = await ollamaResponse.json();
+    res.json(Number(data.response.trim()));
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Error al procesar el texto o no hay un json valido'
+    });
+  }
+});
+
+//POST Errores
+
+app.post('/error', async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
+
+Identifica problemas importantes detectados a partir del texto entregado.
+No inventes errores que no puedan justificarse con la información entregada.
+Los errores deben ser extractos del texto y ser mostrados directamente, no dar una explicacion o una recomendacion.
+Formato: debe ser un string que primero especifique el tipo y luego el error en si, siendo todo separado por un ampersand (&):
+
+tipo1&error1&tipo2&error2
+
+Donde tipo debe ser alguno de los siguientes: apertura, desarrollo, cierre, formalidad.
+error debe ser un extracto del texto (discurso) y su tipo debe tener sentido.
+un tipo siempre tiene que venir acompañado de un ampersand(&)
+Un discurso puede no tener errores.
+Si quieres usar el caracter: ", reemplazalo con : '
+
+Texto:
+${texto}
+
+`,
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.4
+          }
+        })
+      }
+    );
+    const data = await ollamaResponse.json();
+    const errorString = data.response.trim();
+    const errorArray = errorString.split("&");
+    const errorObjeto = [];
+
+    for (let i = 0; i < errorArray.length; i+= 2){
+
+      errorObjeto.push({
+        tipo: errorArray[i],
+        descripcion: errorArray[i+1]
+      })
+    };
+
+    res.json(errorObjeto);
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Error al procesar el texto o no hay un json valido'
+    });
+  }
+});
+
+//POST Sugerencias
+
+app.post('/suggestion', async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
+
+Genera recomendaciones prácticas para mejorar la presentación del discurso.
+Prioriza cambios que tengan un impacto real en la transmisión del mensaje.
+Formato: debe ser un string que de las sugerencias separadas por un ampersand(&):
+
+sugerencia1&sugerencia2&sugerencia3
+
+Donde sugerencia es un texto generado a partir del texto describiendo un tip sencillo.
+Si quieres usar el caracter: ", reemplazalo con : '
+
+Texto:
+${texto}
+
+`,
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.4
+          }
+        })
+      }
+    );
+    const data = await ollamaResponse.json();
+    const sugerenciaString = data.response.trim();
+
+    res.json(sugerenciaString.split("&"));
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Error al procesar el texto o no hay un json valido'
+    });
+  }
+});
+
+//POST Muletillas
+
+app.post('/filler', async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
+
+Las muletillas deben ser palabras que se repitan a menudo en el texto, por lo general son monosílabos por ejemplo: eh, ah. También pueden ser frases que se repiten demasiado, entorpeciendo el entendimiento del discurso.
+Formato: debe ser un string que primero especifique la muletilla y luego la cantidad de la muletilla asociada, siendo todo separado por un ampersand (&):
+
+muletilla1&cantidad1&muletilla2&cantidad2
+
+donde muletilla debe ser la muletilla detectada.
+cantidad se refiere a la cantidad que aparece cierta muletilla.
+un texto puede no tener muletillas.
+Si quieres usar el caracter: ", reemplazalo con : '
+
+Texto:
+${texto}
+
+`,
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.4
+          }
+        })
+      }
+    );
+    const data = await ollamaResponse.json();
+    const muletillaString = data.response.trim();
+    const muletillaArray = muletillaString.split("&");
+    const muletillaObjeto = {};
+
+    if(muletillaString==""){
+      res.json(muletillaObjeto);
+    }
+
+    else{
+      for (let i = 0; i < muletillaArray.length; i+= 2){
+
+      const muletilla = muletillaArray[i].trim();
+      const cantidad = Number(muletillaArray[i + 1]);
+
+      muletillaObjeto[muletilla] = cantidad;
+    };
+
+    res.json(muletillaObjeto);
+    }
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Error al procesar el texto o no hay un json valido'
+    });
+  }
+});
+
+//POST Pronunciacion
+
+app.post('/pronunciation', async (req, res) => {
+  try {
+    const { texto } = req.body;
+
+    if (!texto) {
+      return res.status(400).json({
+        error: 'Debe enviar un texto'
+      });
+    }
+
+    const ollamaResponse = await fetch(
+      'http://localhost:11434/api/generate',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: 'gemma4',
+          prompt: `
+
+Las recomendaciones de pronunciacion deben ser una recomendacion obtenida a partir del texto donde se intenta dar consejos sobre como pronunciar palabras de forma correcta, por ejemplo palabras extranjeras o también consejos para evitar caer en las muletillas.
+Formato: debe ser un string que de las recomendaciones de pronunciacion separadas por un ampersand(&):
+
+recomendacion1&recomendacion2&recomendacion3
+
+Donde recomendacion es un texto generado que describe la recomendación de pronunciacion a partir del texto entregado.
+un texto puede no tener recomendaciones de pronunciacion.
+Si quieres usar el caracter: ", reemplazalo con : '
+
+
+Texto:
+${texto}
+
+`,
+          stream: false,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.4
+          }
+        })
+      }
+    );
+    const data = await ollamaResponse.json();
+    const pronunciacionString = data.response.trim();
+
+    res.json(pronunciacionString.split("&"));
+
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      error: 'Error al procesar el texto o no hay un json valido'
+    });
+  }
+});
+
+//POST Feedback
+
+app.post('/feedback', async (req, res) => {
+  try {
+    const { clarity, formality, fluency, rhythm, error, suggestion, filler, pronunciation, texto } = req.body;
+
+    if (!clarity || !formality || !fluency || !rhythm || !error || !suggestion || !filler || !pronunciation || !texto) {
       return res.status(400).json({
         error: 'Falta(n) algún(os) componente(s)'
       });
@@ -270,168 +530,50 @@ app.post('/summary', async (req, res) => {
           model: 'gemma4',
           prompt: `
 
-Analiza las siguientes variables en formato JSON: keyword (palabras clave), formality (formalidad), tips (sugerencias), texto (discurso).
-
-El objetivo es generar una evaluación final del discurso considerando:
-- El contenido principal identificado mediante las palabras clave.
-- El nivel de formalidad detectado.
-- Las sugerencias de mejora encontradas.
-- El texto original del discurso.
-
-Debes combinar estos análisis para generar una evaluación coherente y objetiva del desempeño comunicativo del discurso.
-
-Evalúa los siguientes aspectos:
-
-1. Claridad:
-Determina qué tan fácil es comprender el mensaje principal del discurso.
-Considera si las ideas están bien expresadas, si existe precisión en el vocabulario y si las palabras utilizadas permiten transmitir correctamente el mensaje.
-Valor numérico desde 0 hasta 99, donde 0 significa que no se entiende el mensaje y 99 que el mensaje se entiende perfectamente.
-
-2. Formalidad:
-Utiliza el análisis de formalidad entregado como referencia principal.
-Determina si el discurso es adecuado para un contexto formal, académico o profesional.
-Valor numérico desde 0 hasta 99, donde 0 significa que el discurso no está en un ambiente culto y 99 que el discurso es apto para ser presentado en lugares importantes ya sea una presentacion en la universidad o en el trabajo.
-
-3. Fluidez:
-Evalúa si la estructura del discurso permite una comunicación natural.
-Considera conexión entre ideas, organización de frases y facilidad de seguimiento para la audiencia.
-Valor numérico desde 0 hasta 99, donde 0 significa que no hay comunicación natural y 99 significa que si una persona lee el discurso entrega el mensaje fácilmente.
-
-4. Ritmo:
-Evalúa la distribución de ideas dentro del discurso.
-Considera si existen partes demasiado extensas, repetitivas o poco desarrolladas.
-Valor numérico desde 0 hasta 99, donde 0 significa que el ritmo en la que se da a entender el mensaje no es para nada acorde y 99 que el ritmo en el que se entrega la información es adecuado para el entendimiento del mensaje.
-
-5. Errores:
-Identifica problemas importantes detectados a partir de los análisis previos.
-No inventes errores que no puedan justificarse con la información entregada.
-Formato: debe ser un jsonb con la siguiente estructura: 
-[
-  {
-    "tipo": "tipo",
-    "descripcion": "Descripción correspondiente1"
-  },
-  {
-    "tipo": "tipo",
-    "descripcion": "Descripción correspondiente2"
-  }
-]
-
-Donde tipo debe ser alguno de los siguientes: apertura, desarrollo, cierre, formalidad.
-Descripcion debe ser un texto generado y debe ser acorde al tipo.
-Un discurso puede no tener sugerencias.
-
-6. Sugerencias:
-Genera recomendaciones prácticas para mejorar la presentación del discurso.
-Se debe tener en cuenta la variable de tips (Sugerencias).
-Prioriza cambios que tengan un impacto real en la transmisión del mensaje.
-Formato: debe ser un jsonb con la siguiente estructura:
-[
-          "sugerencia1",
-          "sugerencia2"
-]
-
-Donde sugerencia es un texto generado a partir de la variable tips.
-
-7. Feedback:
 Genera un comentario general sobre la calidad del discurso, incluyendo fortalezas y aspectos a mejorar.
-Este se debe generar una vez se hayan analizado todos los pasos anteriores.
-Este debe ser un texto.
+Este se debe generar a partir de toda la informacion entregada.
+Las variables Claridad, Formalidad, Fluidez y Ritmo son notas que van desde el 0 hasta 99, siendo 0 que no cumple con ese ámbito y 99 que el discurso cumple con eso de manera correcta.
+Este debe ser un texto generado no muy extenso (máximo un párrafo).
+Si o si debe haber un feedback respecto al discurso.
+Si quieres usar el caracter: ", reemplazalo con : '
 
-8. Muletillas:
-Las muletillas deben ser palabras que se repitan a menudo en el texto, por lo general son monosílabos por ejemplo: eh, ah. También pueden ser frases que se repiten demasiado.
-formato de las muletillas: debe ser un jsonb con la siguiente estructura:
-
-{
-          "muletilla1": cantidadCorrespondiente1,
-          "muletilla2": cantidadCorrespondiente2
-}
-
-donde muletilla debe ser la muletilla detectada.
-un texto puede no tener muletillas.
-cantidadCorrespontiende se refiere a la cantidad que aparece cierta muletilla.
-
-9.Recomendaciones de pronunciacion:
-Las recomendaciones de pronunciacion deben ser una recomendacion obtenida a partir del texto donde se intenta dar consejos sobre como pronunciar palabras de forma correcta, por ejemplo palabras extranjeras o también consejos para evitar caer en las muletillas.
-un texto puede no tener recomendaciones de pronunciacion.
-formato de las recomendaciones de pronunciacion:
-
-[
-          "recomendacion1",
-          "recomendacion2"
-]
-
-donde recomendación es un texto que describe la recomendación.
-
-Reglas:
-- Basa tus conclusiones en la información proporcionada por los análisis previos y el texto original.
-- No contradigas los análisis entregados a menos que exista una inconsistencia evidente.
-- Si dos análisis entregan información diferente, analiza cuál tiene mayor relación con el contexto del discurso.
-- Los valores numéricos deben estar entre 0 y 99 excepto el de las muletillas.
-- No agregues información externa al discurso.
-- Responde únicamente con JSON válido.
-- Ninguno de los puntos enumerados pueden faltar en la respuesta, sobretodo el feedback, en caso de que no haya algo que mejorar indicar expresamente eso o devolver el campo o lista vacio, dependiendo de lo que se esté pidiendo.
-
-
-Formato de respuesta:
-
-{
-  "claridad": 0,
-  "formalidad": 0,
-  "fluidez": 0,
-  "ritmo": 0,
-
-  "errores": [
-    {
-      "tipo": "apertura | desarrollo | cierre | formalidad",
-      "descripcion": "Descripción del problema detectado."
-    }
-  ],
-
-  "sugerencias": [
-    "Sugerencia de mejora."
-  ],
-
-  "feedback": "Comentario general del análisis.",
-
-  "muletillas": {
-    "ejemplo": 0
-  },
-
-  "recomendaciones_pronunciacion": [
-    "Recomendación relacionada con pausas, velocidad o pronunciación."
-  ]
-}
-
-
-
-Palabras clave:
-${keywords}
-
-Formalidad:
-${formality}
-
-Sugerencia:
-${tips}
 
 Texto:
 ${texto}
-
-recuerda que el archivo json debe estar perfectamente correcto, sino esto traerá problemas al funcionamiento del programa.
+Claridad:
+${clarity}
+Fluidez:
+${fluency}
+Ritmo:
+${rhythm}
+Errores de estructura
+${error}
+Sugerencias
+${suggestion}
+Muletillas:
+${filler}
+Recomendaciones de pronunciacion:
+${pronunciation}
 `,
-          format: 'json',
-          stream: false
+          stream: false,
+          keep_alive: 0,
+          options: {
+            num_gpu: 99,
+            num_thread: 8,
+            temperature: 0.5
+          }
         })
       }
     );
     const data = await ollamaResponse.json();
-    res.json(JSON.parse(data.response));
+
+    res.json(data.response.trim());
 
   } catch (error) {
     console.error(error);
 
     res.status(500).json({
-      error: 'Error al procesar el texto'
+      error: 'Error al procesar el texto o no hay un json valido'
     });
   }
 });
@@ -440,44 +582,3 @@ recuerda que el archivo json debe estar perfectamente correcto, sino esto traer�
 app.listen(57423, () => {
   console.log('API corriendo en http://localhost:57423');
 });
-
-
-
-/*
-// GET /cursos
-app.get('/cursos', (req, res) => {
-  const cursos = db.prepare('SELECT * FROM cursos').all();
-  res.json(cursos);
-});
-
-// POST /cursos
-app.post('/cursos', (req, res) => {
-  const { nombre, instructor, creditos } = req.body;
-  const result = db.prepare(
-    'INSERT INTO cursos (nombre, instructor, creditos) VALUES (?, ?, ?)'
-  ).run(nombre, instructor, creditos);
-  res.status(201).json({ id: result.lastInsertRowid, nombre, instructor, creditos });
-});
-
-// PUT /cursos/:id
-app.put('/cursos/:id', (req, res) => {
-  const { nombre, instructor, creditos } = req.body;
-  const info = db.prepare(
-    'UPDATE cursos SET nombre=?, instructor=?, creditos=? WHERE id=?'
-  ).run(nombre, instructor, creditos, req.params.id);
-  if (info.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
-  res.json({ mensaje: 'Curso actualizado' });
-});
-
-// DELETE /cursos/:id
-app.delete('/cursos/:id', (req, res) => {
-  const info = db.prepare('DELETE FROM cursos WHERE id=?').run(req.params.id);
-  if (info.changes === 0) return res.status(404).json({ error: 'Curso no encontrado' });
-  res.json({ mensaje: 'Curso eliminado' });
-});
-
-app.listen(3000, () => {
-  console.log('API corriendo en http://localhost:3000/cursos');
-});
-
-*/

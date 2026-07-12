@@ -1,25 +1,48 @@
-const {consultarAi, summaryAi} = require('../services/genmma4');
-
-
+const {consultarAi, summaryAi, consultarFormalidad} = require('../services/genmma4');
 
 //Hace consultas a la API con IA
 
 async function analizarDiscurso(textoOriginal, textoUsuario, tipoPresentacion, duracion_seg){
   
-  //analiza las palabras clave
-  const claridad = await consultarAi("keywords", textoOriginal);
+  //analiza la claridad del discurso
+  const clarity = await consultarAi("clarity", textoOriginal);
 
   //analiza la formalidad del discurso
-  const formalidad = await consultarAi("formality", textoOriginal);
+  const formality = await consultarFormalidad(textoOriginal, tipoPresentacion);
 
-  //analiza posibles sugerencias que se pueden dar a partir del texto
-  const sugerencia = await consultarAi("tips", textoOriginal);
+  //analiza la fluidez del discurso
+  const fluency = await consultarAi("fluency", textoOriginal);
+
+  //analiza el ritmo del discurso
+  const rhythm = await consultarAi("rhythm", textoOriginal);
+
+  //analiza los errores de estructura
+  const error = await consultarAi("error", textoOriginal);
+
+  //analiza el discurso en busca de sugerencias y las da
+  const suggestion = await consultarAi("suggestion", textoOriginal);
+
+  //analiza y busca muletillas en el discurso
+  const filler = await consultarAi("filler", textoOriginal);
+
+  //analiza errores o consejos de pronunciacion
+  const pronunciation = await consultarAi("pronunciation", textoOriginal);
 
   //crea el feedback general
-  const resumen = await summaryAi(claridad, formalidad, sugerencia, textoOriginal);
+  const feedback = await summaryAi(clarity, formality, fluency, rhythm, error, suggestion, filler, pronunciation, textoOriginal);
 
   //retorna un análisis general del discurso
-  return resumen;
+  return { 
+    claridad: clarity, 
+    formalidad: formality, 
+    fluidez: fluency, 
+    ritmo: rhythm, 
+    errores: error, 
+    sugerencias: suggestion, 
+    feedback: feedback, 
+    muletillas: filler,
+    recomendaciones_pronunciacion: pronunciation
+  };
 
 
 }
