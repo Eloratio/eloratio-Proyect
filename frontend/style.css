@@ -1,0 +1,40 @@
+body{
+    background-color:#DBECEB;
+    margin-left:10%;
+    margin-right:10%;
+    border:2px double black;
+    padding: 10px 10px 10px 10px;
+    font-family: sans-serif;
+}
+
+h1{
+    font-family:fantasy;
+    color:darkslateblue;
+    border-bottom: 2px solid darkslateblue;
+    text-align: center;
+}
+
+button{
+    display: block;
+    margin: 0 auto;
+}
+mark{
+    color:white;
+    background-color: darkred;
+}
+
+textarea{
+    resize: none;
+    display: block;
+    margin: 0 auto;
+}
+
+a{
+    color:darkred;
+}
+table{
+    background-color: black;
+}
+tr{
+    color:darkslateblue;
+}

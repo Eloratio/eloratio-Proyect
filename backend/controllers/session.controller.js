@@ -2,20 +2,26 @@ const supabase = require('../services/supabase');
 const { analizarDiscurso } = require('../services/feedback.service');
 const { crearReportePdf } = require('../services/pdf.service');
 
-// POST /sessions — CA1: crear sesión con texto propuesto
+// POST /sessions — CA1: crear sesión con texto propuesto con un usuario existente
 async function crearSesion(req, res) {
   const { usuario_id, tipo_presentacion, texto_propuesto } = req.body;
 
+  //verifica si falta algun argumento
   if (!usuario_id || !tipo_presentacion || !texto_propuesto)
     return res.status(400).json({ error: 'Faltan campos requeridos: usuario_id, tipo_presentacion, texto_propuesto' });
 
+  //tipos válidos de sesion
   const tiposValidos = ['formal', 'informal', 'academica', 'corporativa', 'expositiva', 'defensa_tesis', 'seminario'];
+
+  //verifica si el tipo de sesion es valido
   if (!tiposValidos.includes(tipo_presentacion))
     return res.status(400).json({ error: `tipo_presentacion debe ser uno de: ${tiposValidos.join(', ')}` });
 
+  //verifica si el texto del usuario cumple con el tamaño minimo
   if (texto_propuesto.trim().length < 20)
     return res.status(400).json({ error: 'El texto propuesto debe tener al menos 20 caracteres' });
 
+  //intenta escribir en la base de datos en supabase
   const { data, error } = await supabase
     .from('sesiones_practica')
     .insert({ usuario_id, tipo_presentacion, texto_propuesto: texto_propuesto.trim() })
@@ -24,6 +30,7 @@ async function crearSesion(req, res) {
 
   if (error) return res.status(500).json({ error: error.message });
 
+  //crea la sesion y almacena sus datos en la variable sesion
   return res.status(201).json({
     mensaje: 'Sesión creada exitosamente',
     sesion: data
@@ -52,7 +59,7 @@ async function analizarSesion(req, res) {
     return res.status(409).json({ error: 'Esta sesión ya fue analizada' });
 
   // Ejecutar análisis
-  const analisis = analizarDiscurso(sesion.texto_propuesto, texto_usuario, sesion.tipo_presentacion, duracion_seg);
+  const analisis = await analizarDiscurso(sesion.texto_propuesto, texto_usuario, sesion.tipo_presentacion, duracion_seg);
   console.log('ANALISIS:', JSON.stringify(analisis));
 
   // Guardar análisis

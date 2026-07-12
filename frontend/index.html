@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Análisis Discurso Eloratio</title>
+        <link type="text/css" rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Ingrese su discurso</h1>
+        Usuario de prueba ID: <input id="idUsuario" type="text" value="f67bfd32-432e-4cba-af9a-41769c0b78f2" size="30" readonly>
+        <br><br>
+              Tipo de discurso: <input id="tipoDiscurso" type="text">
+        <br><br>
+        <textarea rows="9" cols="60" id="discursoIngresado"></textarea>
+        <br>
+        <button type="button" id="analizarDiscurso">Analizar discurso</button>
+        <br>
+        <h1>Resultado</h1>
+        <textarea readonly rows="9" cols="60" id="discursoResultado"></textarea>
+        <script src="axiosmin.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
